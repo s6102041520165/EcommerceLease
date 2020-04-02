@@ -49,15 +49,28 @@ if (!Yii::$app->user->isGuest) {
                     echo Nav::widget([
                         'items' => [
                             [
+                                'label' => 'จัดการข้อมูล',
+                                'url' => '#',
+                                'linkOptions' => ['class' => 'text-white'],
+                                'visible' => Yii::$app->user->can('manageProduct'),
+                                'items' => [
+                                    ['label' => 'ประเภทสินค้า', 'url' => ['/category/index'], 'visible'],
+                                    ['label' => 'สินค้า', 'url' => ['/product/index'], 'visible'],
+                                    ['label' => 'ธนาคาร', 'url' => ['/bank/index'], 'visible'],
+                                    ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['/orders/index'], 'visible'],
+                                    ['label' => 'ประวัติการเช่าอุปกรณ์', 'url' => ['/user/index'], 'visible'],
+                                    ['label' => 'ผู้ใช้', 'url' => ['/user/index']],
+                                ]
+                            ],
+                            [
                                 'label' => 'ข้อมูลส่วนตัว',
                                 'visible' => !Yii::$app->user->isGuest,
                                 'linkOptions' => ['class' => 'text-white'],
                                 'items' => [
                                     ['label' => 'ตะกร้าสินค้า', 'url' => ['cart/index'], 'visible' => (Yii::$app->user->can('reserveCart')) ? true : false],
-                                    ['label' => 'รายการอุปกรณ์ที่เช่า', 'url' => ['cart/index'], 'visible' => ((Yii::$app->user->can('manageLease')) || Yii::$app->user->can('lease')) ? true : false],
                                     ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['orders/index'], 'visible' => (Yii::$app->user->can('order')) ? true : false],
-                                    ['label' => 'ประวัติการเช่าสินค้า', 'url' => ['lease/index'],],
-                                    ['label' => 'แจ้งชำระเงิน', 'url' => ['payment/index'],],
+                                    ['label' => 'ประวัติการเช่าอุปกรณ์', 'url' => ['lease/index'], 'visible' => (Yii::$app->user->can('order')) ? true : false],
+                                    ['label' => 'แจ้งชำระเงิน', 'url' => ['payment/index'], 'visible' => (!Yii::$app->user->isGuest) ? true : false],
                                     '<div class="dropdown-divider"></div>',
                                     '<div class="dropdown-header">ข้อมูลส่วนตัว</div>',
                                     [
@@ -89,6 +102,7 @@ if (!Yii::$app->user->isGuest) {
                                 'linkOptions' => ['class' => 'text-white'],
                                 'visible' => Yii::$app->user->isGuest
                             ],
+                            
                         ],
                         //'options' => ['class' => 'nav-pills'], // set this to nav-tab to get tab-styled navigation
                     ]);
@@ -109,10 +123,7 @@ if (!Yii::$app->user->isGuest) {
         echo Nav::widget([
             'items' => [
                 ['label' => 'หน้าแรก', 'url' => ['/site/index']],
-                ['label' => 'สินค้า', 'url' => ['/product/index']],
                 ['label' => 'ตะกร้าสินค้า', 'url' => ['/cart']],
-                ['label' => 'ประวัติเช่ากล้อง', 'url' => ['/lease/index']],
-                ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['/orders/index']],
                 ['label' => 'ติดต่อเรา', 'url' => ['/site/contact']],
             ],
             'dropdownClass' => Dropdown::classname(), // use the custom dropdown
