@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 02, 2020 at 08:39 AM
+-- Generation Time: Apr 02, 2020 at 12:51 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -21,6 +21,112 @@ SET time_zone = "+00:00";
 --
 -- Database: `ecommerce`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_assignment`
+--
+
+CREATE TABLE `auth_assignment` (
+  `item_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `auth_assignment`
+--
+
+INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
+('admin', '1', 1585820321);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_item`
+--
+
+CREATE TABLE `auth_item` (
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `type` smallint(6) NOT NULL,
+  `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `rule_name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `data` blob DEFAULT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `auth_item`
+--
+
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+('activeOrder', 2, 'activeOrder', NULL, NULL, 1585820321, 1585820321),
+('admin', 1, NULL, NULL, NULL, 1585820321, 1585820321),
+('customer', 1, NULL, NULL, NULL, 1585820321, 1585820321),
+('employee', 1, NULL, NULL, NULL, 1585820321, 1585820321),
+('lease', 2, 'Lease by customer', NULL, NULL, 1585820321, 1585820321),
+('manageCategory', 2, 'manageCategory', NULL, NULL, 1585820321, 1585820321),
+('manageCustomer', 2, 'manageCustomer', NULL, NULL, 1585820321, 1585820321),
+('manageLease', 2, 'Manage lease by employee', NULL, NULL, 1585820321, 1585820321),
+('manageOrder', 2, 'manageOrder', NULL, NULL, 1585820321, 1585820321),
+('managePayment', 2, 'managePayment', NULL, NULL, 1585820321, 1585820321),
+('manageProduct', 2, 'manageProduct', NULL, NULL, 1585820321, 1585820321),
+('manageProfile', 2, 'Manage my profile', NULL, NULL, 1585820321, 1585820321),
+('manageTracking', 2, 'manageTracking', NULL, NULL, 1585820321, 1585820321),
+('manageUser', 2, 'manageUser', NULL, NULL, 1585820321, 1585820321),
+('order', 2, 'order', NULL, NULL, 1585820321, 1585820321),
+('reserveCart', 2, 'Reserve by customer', NULL, NULL, 1585820321, 1585820321),
+('viewBill', 2, 'viewBill', NULL, NULL, 1585820321, 1585820321),
+('viewReport', 2, 'viewReport', NULL, NULL, 1585820321, 1585820321);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_item_child`
+--
+
+CREATE TABLE `auth_item_child` (
+  `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `auth_item_child`
+--
+
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+('admin', 'customer'),
+('admin', 'employee'),
+('admin', 'manageUser'),
+('customer', 'lease'),
+('customer', 'managePayment'),
+('customer', 'manageProfile'),
+('customer', 'order'),
+('customer', 'reserveCart'),
+('employee', 'activeOrder'),
+('employee', 'customer'),
+('employee', 'manageCategory'),
+('employee', 'manageCustomer'),
+('employee', 'manageOrder'),
+('employee', 'manageProduct'),
+('employee', 'manageTracking'),
+('employee', 'viewBill'),
+('employee', 'viewReport');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_rule`
+--
+
+CREATE TABLE `auth_rule` (
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `data` blob DEFAULT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -51,13 +157,6 @@ CREATE TABLE `cart` (
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`id`, `product_id`, `created_by`, `created_at`, `updated_by`, `updated_at`, `quantity`) VALUES
-(30, 4, 3, 1585809011, 3, 1585809011, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -76,9 +175,7 @@ CREATE TABLE `category` (
 
 INSERT INTO `category` (`id`, `name`, `sub_category`) VALUES
 (1, 'กล้อง', NULL),
-(2, 'กล้องฟิล์ม', 1),
-(3, 'กล้อง DSLR', 1),
-(4, 'กล้องMirrorless ', 1);
+(2, 'กล้องฟิล์ม', 1);
 
 -- --------------------------------------------------------
 
@@ -88,9 +185,9 @@ INSERT INTO `category` (`id`, `name`, `sub_category`) VALUES
 
 CREATE TABLE `lease` (
   `id` int(11) NOT NULL,
-  `lease_date` date DEFAULT NULL,
-  `due_date` date DEFAULT NULL,
+  `lease_date` date NOT NULL,
   `lease_time` time NOT NULL,
+  `due_date` date NOT NULL,
   `due_time` time NOT NULL,
   `description` text DEFAULT NULL,
   `grand_total` double NOT NULL,
@@ -98,17 +195,8 @@ CREATE TABLE `lease` (
   `created_by` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 8
+  `status` int(11) DEFAULT 8
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `lease`
---
-
-INSERT INTO `lease` (`id`, `lease_date`, `due_date`, `lease_time`, `due_time`, `description`, `grand_total`, `created_at`, `created_by`, `updated_at`, `updated_by`, `status`) VALUES
-(1, '2020-04-01', '2020-04-04', '00:00:00', '00:00:00', 'ttttttttttttttttttt', 6000, 1585753619, 3, 1585755385, 3, 8),
-(2, '2020-04-02', '2020-04-08', '00:00:00', '00:00:00', '', 2000, 1585769821, 3, 1585769821, 3, 8),
-(3, '2020-04-02', '2020-04-04', '00:00:00', '00:00:00', '', 6000, 1585770165, 3, 1585770165, 3, 8);
 
 -- --------------------------------------------------------
 
@@ -122,15 +210,6 @@ CREATE TABLE `lease_detail` (
   `product_id` int(11) NOT NULL,
   `qty` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `lease_detail`
---
-
-INSERT INTO `lease_detail` (`id`, `lease_id`, `product_id`, `qty`) VALUES
-(1, 1, 3, 3),
-(2, 2, 2, 1),
-(3, 3, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -148,19 +227,23 @@ CREATE TABLE `migration` (
 --
 
 INSERT INTO `migration` (`version`, `apply_time`) VALUES
-('m000000_000000_base', 1584418695),
-('m130524_201442_init', 1585669283),
-('m190124_110200_add_verification_token_column_to_user_table', 1585669283),
-('m200317_041912_create_profile_table', 1585669283),
-('m200317_041935_create_category_table', 1585669283),
-('m200317_041947_create_product_table', 1585669283),
-('m200317_042001_create_orders_table', 1585669283),
-('m200317_042027_create_order_detail_table', 1585669283),
-('m200317_042041_create_lease_table', 1585669283),
-('m200317_042049_create_lease_detail_table', 1585669283),
-('m200317_042050_create_bank_table', 1585669283),
-('m200317_042100_create_payment_table', 1585669284),
-('m200401_064507_create_cart_table', 1585723585);
+('m000000_000000_base', 1585818802),
+('m130524_201442_init', 1585818810),
+('m140506_102106_rbac_init', 1585818804),
+('m170907_052038_rbac_add_index_on_auth_assignment_user_id', 1585818804),
+('m180523_151638_rbac_updates_indexes_without_prefix', 1585818804),
+('m190124_110200_add_verification_token_column_to_user_table', 1585818810),
+('m200317_041912_create_profile_table', 1585818811),
+('m200317_041935_create_category_table', 1585818811),
+('m200317_041947_create_product_table', 1585818811),
+('m200317_042001_create_orders_table', 1585818811),
+('m200317_042027_create_order_detail_table', 1585818811),
+('m200317_042041_create_lease_table', 1585818811),
+('m200317_042049_create_lease_detail_table', 1585818811),
+('m200317_042050_create_bank_table', 1585818811),
+('m200317_042100_create_payment_table', 1585818811),
+('m200401_064507_create_cart_table', 1585818811),
+('m200402_085527_init_rbac', 1585820321);
 
 -- --------------------------------------------------------
 
@@ -183,11 +266,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `grand_total`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-(17, 400000, 9, 1585771788, 1585772270, 3, 3),
-(18, 1000000, 8, 1585777883, 1585777883, 3, 3),
-(19, 800000, 9, 1585778172, 1585778185, 3, 3),
-(20, 1000000, 9, 1585779945, 1585779966, 3, 3),
-(21, 800000, 9, 1585804540, 1585804561, 3, 3);
+(1, 600000, 8, 1585823085, 1585823085, 1, 1),
+(2, 200000, 9, 1585823142, 1585823154, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -207,14 +287,8 @@ CREATE TABLE `order_detail` (
 --
 
 INSERT INTO `order_detail` (`id`, `order_id`, `product_id`, `qty`) VALUES
-(8, 17, 2, 2),
-(9, 18, 3, 3),
-(10, 18, 5, 2),
-(11, 19, 2, 2),
-(12, 19, 5, 2),
-(13, 20, 5, 5),
-(14, 21, 4, 2),
-(15, 21, 5, 2);
+(1, 1, 1, 3),
+(2, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -259,10 +333,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `description`, `picture`, `price_for_order`, `price_for_lease`, `stock`, `unit_name`, `category_id`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(2, 'Class aptent taciti sociosqu', 'Sed lectus. Praesent nec nisl a purus blandit viverra. Fusce pharetra convallis urna. Maecenas nec odio et ante tincidunt tempus. Morbi mollis tellus ac sapien.\r\n\r\nProin faucibus arcu quis ante. In ac felis quis tortor malesuada pretium. Vestibulum eu odio. Aenean vulputate eleifend tellus. Cras dapibus.\r\n\r\nProin magna. Vestibulum suscipit nulla quis orci. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Fusce neque. Curabitur at lacus ac velit ornare lobortis.', 'product/1585702660_1949261748.jpg', 200000, 2000, 16, 'เครื่อง', 3, 3, 3, 1585702371, 1585778172),
-(3, 'น้ำดื่มคริสตัล 1.5 ', 'Suspendisse nisl elit, rhoncus eget, elementum ac, condimentum eget, diam. Etiam sollicitudin, ipsum eu pulvinar rutrum, tellus ipsum laoreet sapien, quis venenatis ante odio sit amet eros.', 'product/1585703055_1659638989.png', 200000, 2000, 16, 'เครื่อง', 4, 3, 3, 1585703055, 1585777883),
-(4, 'Praesent ac massa at ligula', 'Nulla neque dolor sagittis egetQuisque id mi. Etiam sollicitudin, ipsum eu pulvinar rutrum, tellus ipsum laoreet sapien, quis venenatis ante odio sit amet eros. Maecenas egestas arcu quis ligula mattis placerat. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Ut id nisl quis enim dignissim sagittis.\r\n\r\nCurabitur nisi. Curabitur nisi. Suspendisse eu ligula. Phasellus viverra nulla ut metus varius laoreet. Aliquam lobortis.\r\n\r\nAenean imperdiet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus dolor. Fusce vulputate eleifend sapien. Quisque rutrum.', 'product/1585703358_1867859645.png', 200000, 2000, 17, 'เครื่อง', 4, 3, 3, 1585703358, 1585804540),
-(5, 'น้ำดื่มคริสตัล 1.5 ', 'jjjjjjjjjjj', 'product/1585703483_4359328432.png,product/1585703483_1898249199.png', 200000, 2000, 189, 'เครื่อง', 1, 3, 3, 1585703483, 1585804540);
+(1, 'test', 'Sed in libero ut nibh placerat accumsan. Nullam vel sem. Nulla neque dolor, sagittis eget, iaculis quis, molestie non, velit. Aliquam lobortis.', 'product/1585822959_7924477919.jpg,product/1585822959_2066098634.jpg', 200000, 2000, 16, 'เครื่อง', 2, 1, 1, 1585822959, 1585823142);
 
 -- --------------------------------------------------------
 
@@ -289,7 +360,7 @@ CREATE TABLE `profile` (
 --
 
 INSERT INTO `profile` (`id`, `f_name`, `l_name`, `picture`, `dob`, `address`, `subdistrict`, `district`, `province`, `zipcode`, `user_id`) VALUES
-(4, 'วีรชัย', 'ปลอดแก้ว', 'profile/1585746557_5162375637.png', '1997-02-09', 'aaaaaaaaa', 'นาโหนด', 'อำเภอ', 'พัทลุง', '93000', 3);
+(1, 'วีรชัย', 'ปลอดแก้ว', 'profile/1585819650_3910783123.jpg', '2020-04-02', 'ddddddddddd', 'นาโหนด', 'อำเภอ', 'พัทลุง', '93000', 1);
 
 -- --------------------------------------------------------
 
@@ -315,11 +386,39 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `verification_token`) VALUES
-(3, 'clkeen157', 'AwlBdHCYLtTCyjO_j_ejMq0-rC1pb7DH', '$2y$13$KP5L4mZhHzd6HAGK/BaoX.OKOuf/7CLUlDCqC7i5ixIeM1I7kCUOO', NULL, 'clkeen157@gmail.com', 10, 1585670092, 1585779859, 'gYkQXgfHe-SDmo-87YOJddbeYDPAL0ld_1585670092');
+(1, 'clkeen157', 'kq571e0Na1I8rVqbBIK25Dz20VBkq3HI', '$2y$13$oKom0RwpO4NsWWjok9QokeSflk1RXdLKvk9Msp/X4NgDSXFbbW5OO', NULL, 'clkeen157@gmail.com', 10, 1585818971, 1585818989, 'Pf9g6ZLFnk8oQ2zH9YzJ8pBCAXgoQP8A_1585818971');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `auth_assignment`
+--
+ALTER TABLE `auth_assignment`
+  ADD PRIMARY KEY (`item_name`,`user_id`),
+  ADD KEY `idx-auth_assignment-user_id` (`user_id`);
+
+--
+-- Indexes for table `auth_item`
+--
+ALTER TABLE `auth_item`
+  ADD PRIMARY KEY (`name`),
+  ADD KEY `rule_name` (`rule_name`),
+  ADD KEY `idx-auth_item-type` (`type`);
+
+--
+-- Indexes for table `auth_item_child`
+--
+ALTER TABLE `auth_item_child`
+  ADD PRIMARY KEY (`parent`,`child`),
+  ADD KEY `child` (`child`);
+
+--
+-- Indexes for table `auth_rule`
+--
+ALTER TABLE `auth_rule`
+  ADD PRIMARY KEY (`name`);
 
 --
 -- Indexes for table `bank`
@@ -420,37 +519,37 @@ ALTER TABLE `bank`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `lease`
 --
 ALTER TABLE `lease`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `lease_detail`
 --
 ALTER TABLE `lease_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `payment`
@@ -462,23 +561,42 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `auth_assignment`
+--
+ALTER TABLE `auth_assignment`
+  ADD CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `auth_item`
+--
+ALTER TABLE `auth_item`
+  ADD CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `auth_item_child`
+--
+ALTER TABLE `auth_item_child`
+  ADD CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `cart`

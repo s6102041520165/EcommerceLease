@@ -54,11 +54,11 @@ if (!Yii::$app->user->isGuest) {
                                 'linkOptions' => ['class' => 'text-white'],
                                 'visible' => Yii::$app->user->can('manageProduct'),
                                 'items' => [
-                                    ['label' => 'ประเภทสินค้า', 'url' => ['/category/index'], 'visible'],
-                                    ['label' => 'สินค้า', 'url' => ['/product/index'], 'visible'],
-                                    ['label' => 'ธนาคาร', 'url' => ['/bank/index'], 'visible'],
-                                    ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['/orders/index'], 'visible'],
-                                    ['label' => 'ประวัติการเช่าอุปกรณ์', 'url' => ['/user/index'], 'visible'],
+                                    ['label' => 'ประเภทสินค้า', 'url' => ['/category/index'], 'visible' => Yii::$app->user->can("manageCategory")],
+                                    ['label' => 'สินค้า', 'url' => ['/product/index'], 'visible' => Yii::$app->user->can("manageProduct")],
+                                    ['label' => 'ธนาคาร', 'url' => ['/bank/index'], 'visible' => Yii::$app->user->can("manageBank")],
+                                    ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['/orders/index'], 'visible' => Yii::$app->user->can("manageOrder")],
+                                    ['label' => 'ประวัติการเช่าอุปกรณ์', 'url' => ['/user/index'], 'visible' => Yii::$app->user->can("manageLease")],
                                     ['label' => 'ผู้ใช้', 'url' => ['/user/index']],
                                 ]
                             ],
