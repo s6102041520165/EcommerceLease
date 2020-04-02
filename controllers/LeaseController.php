@@ -12,6 +12,10 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use kartik\mpdf\Pdf;
+use Mpdf\Config\ConfigVariables;
+use Mpdf\Config\FontVariables;
+
 /**
  * LeaseController implements the CRUD actions for Lease model.
  */
@@ -138,7 +142,7 @@ class LeaseController extends Controller
             'format' => Pdf::FORMAT_A4,
             'orientation' => Pdf::ORIENT_PORTRAIT,
             'destination' => Pdf::DEST_BROWSER,
-            'content' => $this->renderPartial('receipt', ['model' => $model]),
+            'content' => $this->renderPartial('contract', ['model' => $model]),
             'options' => [
                 // any mpdf options you wish to set
             ],
