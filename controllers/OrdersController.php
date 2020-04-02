@@ -121,9 +121,14 @@ class OrdersController extends Controller
         return $this->redirect(['view', 'id' => $id]);
     }
 
-    public function actionReport($id)
+    public function actionReport($date)
     {
-        $model = $this->findModel($id);
+        $model = Orders::find()->select(['*'])
+            ->where(['status' => 10])
+            ->andWhere(['=', "FROM_UNIXTIME(created_at,'%Y-%m-%d')", $date])
+            //->groupBy(["FROM_UNIXTIME(created_at,'%Y-%m-%d')"])
+            ->all();
+        //$model = $this->findModel($id);
 
         // setup kartik\mpdf\Pdf component
         $pdf = new Pdf([

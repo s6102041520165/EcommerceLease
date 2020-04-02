@@ -41,8 +41,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     for ($i = 0; $i < sizeof($imageList); $i++) {
                         $result .= '<div class="col-lg-4 col-md-4 col-sm-4">';
 
-                        $result .= '<a href="' . Yii::getAlias('@web/../../image/') . $imageList[$i] . '" class="product-thumbnail">';
-                        $result .= '<img src="' . Yii::getAlias('@web/../../image/') . $imageList[$i] . '" alt="' . $imageList[$i] . '" class="img-thumbnail" style="width:50px height:auto">';
+                        $result .= '<a href="' . Yii::getAlias('@web/image/') . $imageList[$i] . '" class="product-thumbnail">';
+                        $result .= '<img src="' . Yii::getAlias('@web/image/') . $imageList[$i] . '" alt="' . $imageList[$i] . '" class="img-thumbnail" style="width:50px height:auto">';
                         $result .= '</a>';
 
                         $result .= '</div>';
@@ -51,7 +51,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'description',
-            'price',
+            'price_for_order',
+            'price_for_lease',
             'stock',
             [
                 'attribute' => 'created_by',
@@ -70,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'category_id',
                 'value' => function ($data) {
-                    return $data->categories['name'];
+                    return $data->category['name'];
                 }
             ]
         ],

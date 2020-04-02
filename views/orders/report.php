@@ -7,7 +7,10 @@ use yii\helpers\ArrayHelper;
 use yii\web\View;
 
 $this->title = 'รายงานยอดขาย';
-$order_detail = OrderDetail::findAll(['order_id' => $model->id]);
+
+$order_detail = OrderDetail::findAll([
+    'order_id' => $model->id,
+]);
 
 
 $round = count($order_detail);
@@ -25,25 +28,25 @@ $round = count($order_detail);
             <th style="text-align: center">ราคารวม</th>
         </tr>
         <?php
-        $total=0;
+        $total = 0;
         for ($i = 0; $i < $round; $i++) {
-            $product = Product :: findOne(['id' => $order_detail[$i]->product_id]);
+            $product = Product::findOne(['id' => $order_detail[$i]->product_id]);
             $total += $product->price_for_order * $order_detail[$i]->qty;
-            ?>
+        ?>
             <tr>
-                <td style="text-align: center;"><?php echo $i+1; ?></td>
+                <td style="text-align: center;"><?php echo $i + 1; ?></td>
                 <td><?php echo $product->name; ?></td>
-                <td style="text-align: right;"><?php echo number_format($product->price_for_order,2); ?></td>
-                <td style="text-align: right;"><?php echo number_format($order_detail[$i]->qty,2); ?></td>
-                <td style="text-align: right;"><?php echo number_format($product->price_for_order * $order_detail[$i]->qty,2); ?></td>
+                <td style="text-align: right;"><?php echo number_format($product->price_for_order, 2); ?></td>
+                <td style="text-align: right;"><?php echo number_format($order_detail[$i]->qty, 2); ?></td>
+                <td style="text-align: right;"><?php echo number_format($product->price_for_order * $order_detail[$i]->qty, 2); ?></td>
             </tr>
-            <?php
-        }   
+        <?php
+        }
         ?>
         <tr>
             <td colspan="4" style="text-align: right;">ยอดเงินที่ขายได้</td>
             <td style="text-align: right;">
-                <?php echo number_format($total,2); ?>
+                <?php echo number_format($total, 2); ?>
             </td>
         </tr>
     </table>
