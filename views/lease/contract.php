@@ -1,11 +1,22 @@
 <?php
 
     use app\models\Profile;
+    use app\models\Lease;
+use app\models\LeaseDetail;
 
-    $profile = Profile::findOne(['user_id' => $model->created_by]);
+$profile = Profile::findOne(['user_id' => $model->created_by]);
+    $lesae = LeaseDetail::findAll(['lease_id' => $model->id]);
+    
 
     $age=date("Y")-substr($profile->dob,0,4);
-    $address = $profile->address . "<dottab>" . $profile->subdistrict . "<dottab>" . $profile->district. "<dottab>" . $profile->province;
+    $address = $profile->address . "<dottab>" . $profile->subdistrict . "<dottab>" . "อ.". $profile->district. "<dottab>" . "จ." . $profile->province;
+
+    $arr = [];
+    foreach($lesae as $data) {
+        array_push($arr, $data->id);
+    }
+
+    $dataString = implode(" , ",$arr);
 
 
 ?>
@@ -13,7 +24,7 @@
     <h4 style="text-align: center;font-weight:bold;font-size:16pt;">สัญญาค้ำประกันเช่าอุปกรณ์ถ่ายภาพ<br>ร้านเช่ากล้อง ปัตตานี</h4>
     <p style="display:block;text-align: right;font-size:16pt;margin-top:30px">
         เขียนที่.....................................<br>
-        วันที่................................................................
+        วันที่.....<?php echo date("d-M-Y") ?>...........................................
     </p>
     <p style="text-indent: 30px;text-align:justify;font-size:16pt;margin:0px;margin-top:20px">ข้าพเจ้า.....<?php echo "คุณ" . $profile->f_name ."<dottab />". $profile->l_name; ?>............................................................................................อายุ.......<?php echo $age ?>........ปี
         สัญชาติ.........ไทย................ที่อยู่........<?php echo $address ?>...........................................
@@ -23,10 +34,8 @@
         ขอทำสัญญานี้เพื่อค้ำประกันการเช่าอุปกรณ์ถ่ายภาพของ.......................................................................................(ผู้เช่า)
         ต่อร้าน เช่ากล้อง ปัตตานี<br>
         เวลาเช่า...........................วันที่........<?php echo $model->lease_date ?>...............เวลาคืน..........................วันที่.....<?php echo $model->due_date ?>.................
-        อุปกรณ์ที่เช่า........................................................................................................................................................................
+        อุปกรณ์ที่เช่า........<?php echo $dataString ;?>..................................................................................................................................
     </p>
     <h3 style="margin-top:0px;text-indent:30px;text-align: justify;font-weight:bold">ในกรณีที่ผู้เช่าไม่สามารถนำของมาคืนตามกำหนดได้หรือทำของชำรุดเสียหายรวมทั้งผิดสัญญาเช่าข้าพเจ้ายินดีรับผิดชอบชำระหนี้แทนให้เสร็จสิ้นภายใน 10 วัน</h3>
     <h3 style="text-indent:30px;font-weight:bold">หากส่งอุปกรณ์ไม่ตรงตามเวลาที่กำหนด จะต้องจ่ายค่าปรับชั่วโมงละ 40 บาท</h3>
-
-    <div style="text-decoration:underline;">My Very Long Text Too Big For Container</div>
 </div>
