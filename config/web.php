@@ -5,6 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+    'name' => 'ร้านเช่ากล้องปัตตานี',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'language' => 'th',

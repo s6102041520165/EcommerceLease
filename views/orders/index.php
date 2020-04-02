@@ -16,23 +16,33 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    <?php  echo $this->render('_search', ['model' => $searchModel]); 
     ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'grand_total',
+            [
+                'attribute' => 'created_by',
+                'value' => function ($data) {
+                    return $data->creator['username'];
+                }
+            ],
+            [
+                'attribute' => 'grand_total',
+                'value' => function ($data) {
+                    return number_format($data->grand_total);
+                }
+            ],
             [
                 'attribute' => 'status',
                 'format' => 'raw',
                 'value' => function ($data) {
                     $badge = ($data->status === 9) ? "badge-warning" : "badge-success";
-                    return "<span class='badge $badge'>" . (($data->status === 9) ? "กำลังดำเนินการ" : "ได้รับการยืนยันแล้ว" ). "</span>";
+                    return "<span class='badge $badge'>" . (($data->status === 9) ? "กำลังดำเนินการ" : "ได้รับการยืนยันแล้ว") . "</span>";
                 }
             ],
             'created_at:relativeTime',

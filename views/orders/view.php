@@ -23,6 +23,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'class' => 'btn btn-primary',
         'target' => '_blank',
     ]) ?>
+
+    <?php if ($model->status === 9) : ?>
+        <?php echo Html::a(FA::icon('check-circle') . ' ยืนยัน', ['active', 'id' => $model->id], [
+            'class' => 'btn btn-warning',
+        ]) ?>
+    <?php endif; ?>
+
+    <?php if ($model->status === 10) : ?>
+        <?php echo Html::a(FA::icon('ban') . ' ยกเลิก', ['inactive', 'id' => $model->id], [
+            'class' => 'btn btn-danger',
+        ]) ?>
+    <?php endif; ?>
+    <br />
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [

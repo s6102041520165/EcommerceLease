@@ -53,9 +53,15 @@ if (!Yii::$app->user->isGuest) {
                                 'visible' => !Yii::$app->user->isGuest,
                                 'linkOptions' => ['class' => 'text-white'],
                                 'items' => [
-                                    ['label' => 'Level 1 - Dropdown A', 'url' => '#',],
+                                    ['label' => 'ตะกร้าสินค้า', 'url' => ['cart/index'],],
+                                    ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['orders/index'],],
+                                    ['label' => 'ประวัติการเช่าสินค้า', 'url' => ['lease/index'],],
                                     '<div class="dropdown-divider"></div>',
                                     '<div class="dropdown-header">ข้อมูลส่วนตัว</div>',
+                                    [
+                                        'label' => 'แก้ไขข้อมูลส่วนตัว',
+                                        'url' => ['profile/update'],
+                                    ],
                                     [
                                         'label' => 'เปลี่ยนรหัสผ่าน',
                                         'url' => ['site/request-password-reset'],

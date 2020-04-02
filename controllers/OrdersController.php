@@ -103,6 +103,24 @@ class OrdersController extends Controller
         ]);
     }
 
+    public function actionActive($id)
+    {
+        $model = $this->findModel($id);
+        $model->setAttribute('status', 10);
+        $model->save();
+
+        return $this->redirect(['view', 'id' => $id]);
+    }
+
+    public function actionInactive($id)
+    {
+        $model = $this->findModel($id);
+        $model->setAttribute('status', 9);
+        $model->save();
+
+        return $this->redirect(['view', 'id' => $id]);
+    }
+
     public function actionReceipt($id)
     {
         $model = $this->findModel($id);
