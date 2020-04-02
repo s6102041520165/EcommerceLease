@@ -124,7 +124,7 @@ class OrdersController extends Controller
     public function actionReport($date)
     {
         $model = Orders::find()->select(['*'])
-            ->where(['status' => 10])
+            // ->where(['status' => 10])
             ->andWhere(['=', "FROM_UNIXTIME(created_at,'%Y-%m-%d')", $date])
             //->groupBy(["FROM_UNIXTIME(created_at,'%Y-%m-%d')"])
             ->all();
