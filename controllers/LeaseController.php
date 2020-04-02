@@ -15,6 +15,7 @@ use yii\filters\VerbFilter;
 use kartik\mpdf\Pdf;
 use Mpdf\Config\ConfigVariables;
 use Mpdf\Config\FontVariables;
+use yii\filters\AccessControl;
 
 /**
  * LeaseController implements the CRUD actions for Lease model.
@@ -31,6 +32,21 @@ class LeaseController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create','update','delete','view'],
+                        'roles' => ['manageLease'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['lease'],
+                    ],
                 ],
             ],
         ];
