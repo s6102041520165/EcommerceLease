@@ -5,6 +5,7 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Payment;
+use Yii;
 
 /**
  * PaymentSearch represents the model behind the search form of `app\models\Payment`.
@@ -41,6 +42,8 @@ class PaymentSearch extends Payment
     public function search($params)
     {
         $query = Payment::find();
+
+        $query->where(['created_by' => Yii::$app->user->id]);
 
         // add conditions that should always apply here
 

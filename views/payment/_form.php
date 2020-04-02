@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Bank;
 use app\models\Orders;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -14,8 +15,17 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?php $receipt = ArrayHelper::map(Orders::findAll(['created_by' => Yii::$app->user->id]), 'id', function ($data) {
+    <?php $receipt = ArrayHelper::map(Orders::findAll(
+        [
+            'created_by' => Yii::$app->user->id,
+            'status' => 9
+        ],
+    ), 'id', function ($data) {
         return $data->id . " - " . $data->creator['username'];
+    }) ?>
+
+    <?php $bank = ArrayHelper::map(Bank::find()->all(), 'id', function ($data) {
+        return $data->account_number . " - " . $data->account_name . " - " . $data->bank;
     }) ?>
 
     <?= $form->field($model, 'receipt_id')->dropDownList($receipt, ['prompt' => 'กรุณาเลือกเลขที่ใบเสร็จ']) ?>
@@ -26,9 +36,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'source_bank')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'destination_bank')->textInput() ?>
+    <?= $form->field($model, 'destination_bank')->dropDownList($bank, ['prompt' => '===== กรุณาเลือกธนาคารที่โอน =====']) ?>
 
-    <?= $form->field($model, 'slip')->textInput(['maxlength' => true]) ?>
+    <div class="col-lg-12">
+        <?= $form->field($imageFile, 'imageFiles[]')->fileInput() ?>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'บันทึก'), ['class' => 'btn btn-success']) ?>

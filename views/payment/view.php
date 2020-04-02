@@ -16,8 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+        <?= Html::a(Yii::t('app', 'แก้ไข'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'ลบ'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => Yii::t('app', 'คุณต้องการลบรายการนี้ใช่หรือไม่'),
@@ -34,8 +34,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'location',
             'source_bank',
-            'destination_bank',
-            'slip',
+            [
+                'attribute' => 'destination_bank',
+                'value' => function($data){
+                    return $data->bank['account_number']. " - ". $data->bank['account_name'] . " - ".$data->bank['bank'];
+                }
+            ],
+            [
+                'attribute' => 'slip',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    return "<img src='" . Yii::getAlias('@web/image/') . $data->slip . "' style='width:150px;height:auto'/>";
+                }
+            ],
         ],
     ]) ?>
 

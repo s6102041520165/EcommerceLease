@@ -5,6 +5,7 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Orders;
+use Yii;
 
 /**
  * OrdersSearch represents the model behind the search form of `app\models\Orders`.
@@ -41,6 +42,10 @@ class OrdersSearch extends Orders
     public function search($params)
     {
         $query = Orders::find()->where(['<>', 'status', 8]);
+
+        if (\Yii::$app->authManager-> getAssignment('customer',Yii::$app->user->id)){
+            $query->andWhere(['created_by' => Yii::$app->user->id]);
+        }
 
         // add conditions that should always apply here
 

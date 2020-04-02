@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\CategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Categories');
+$this->title = Yii::t('app', 'ประเภทสินค้า');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-index">

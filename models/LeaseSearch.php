@@ -5,6 +5,7 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Lease;
+use Yii;
 
 /**
  * LeaseSearch represents the model behind the search form of `app\models\Lease`.
@@ -42,6 +43,10 @@ class LeaseSearch extends Lease
     public function search($params)
     {
         $query = Lease::find();
+        
+        if (\Yii::$app->authManager-> getAssignment('customer',Yii::$app->user->id)){
+            $query->where(['created_by' => Yii::$app->user->id]);
+        }
 
         // add conditions that should always apply here
 

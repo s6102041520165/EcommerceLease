@@ -36,15 +36,16 @@ class LeaseController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
+                'only' => ['create','update','delete','view','index'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['create','update','delete','view'],
+                        'actions' => ['update','delete',],
                         'roles' => ['manageLease'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index'],
+                        'actions' => ['index','create','view'],
                         'roles' => ['lease'],
                     ],
                 ],

@@ -24,13 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'target' => '_blank',
     ]) ?>
 
-    <?php if ($model->status === 9) : ?>
+    <?php if ($model->status === 9 && Yii::$app->user->can('manageOrder')) : ?>
         <?php echo Html::a(FA::icon('check-circle') . ' ยืนยัน', ['active', 'id' => $model->id], [
             'class' => 'btn btn-warning',
         ]) ?>
     <?php endif; ?>
 
-    <?php if ($model->status === 10) : ?>
+    <?php if ($model->status === 10 && Yii::$app->user->can('manageOrder')) : ?>
         <?php echo Html::a(FA::icon('ban') . ' ยกเลิก', ['inactive', 'id' => $model->id], [
             'class' => 'btn btn-danger',
         ]) ?>
@@ -127,7 +127,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'slip',
                 'format' => 'raw',
                 'value' => function ($data) {
-                    return "<a target='_blank' href='" . Yii::getAlias('@web/image/') . $data->image . "'><img src='" . Yii::getAlias('@web/image/') . $data->image . "' style='width:250px;height:auto' class='thumbnail' /></a>";
+                    return "<a target='_blank' href='" . Yii::getAlias('@web/image/') . $data->slip . "'><img src='" . Yii::getAlias('@web/image/') . $data->slip . "' style='width:250px;height:auto' class='thumbnail' /></a>";
                 }
             ],
 

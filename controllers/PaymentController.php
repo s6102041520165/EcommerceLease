@@ -5,9 +5,13 @@ namespace app\controllers;
 use Yii;
 use app\models\Payment;
 use app\models\PaymentSearch;
+use app\models\Profile;
+use app\models\UploadForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
+use yii\web\UploadedFile;
 
 /**
  * PaymentController implements the CRUD actions for Payment model.
@@ -66,12 +70,31 @@ class PaymentController extends Controller
     {
         $model = new Payment();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $uploadSingleFile = new UploadForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $uploadSingleFile->imageFiles = UploadedFile::getInstances($uploadSingleFile, 'imageFiles');
+
+            //print_r($pos);die();
+            //Upload file
+            //var_dump($uploadForm->imageFiles);die();
+            $picture = $uploadSingleFile->upload('profile');
+
+            if ($picture) {
+                //Uploaded successfully
+                $mergeTextPicture = implode(',', $picture);
+
+                $model->slip = $mergeTextPicture;
+
+                //var_dump($model);die();
+                $model->save(false);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [
             'model' => $model,
+            'imageModel' => $uploadSingleFile,
         ]);
     }
 
@@ -86,12 +109,32 @@ class PaymentController extends Controller
     {
         $model = $this->findModel($id);
 
+        $uploadSingleFile = new UploadForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $uploadSingleFile->imageFiles = UploadedFile::getInstances($uploadSingleFile, 'imageFiles');
+
+            //print_r($pos);die();
+            //Upload file
+            //var_dump($uploadForm->imageFiles);die();
+            $picture = $uploadSingleFile->upload('payment');
+
+            if ($picture) {
+                //Uploaded successfully
+                $mergeTextPicture = implode(',', $picture);
+
+                $model->slip = $mergeTextPicture;
+
+
+                $model->save(false);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
+
 
         return $this->render('update', [
             'model' => $model,
+            'imageModel' => $uploadSingleFile,
         ]);
     }
 

@@ -33,6 +33,7 @@ class ProductController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
+                'only' => ['index','create','update','delete','view'],
                 'rules' => [
                     [
                         'allow' => true,

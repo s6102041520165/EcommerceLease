@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <?php Pjax::begin(); ?>
-    <?php  echo $this->render('_search', ['model' => $searchModel]); 
+    <?php echo $this->render('_search', ['model' => $searchModel]);
     ?>
 
     <?= GridView::widget([
@@ -49,7 +49,10 @@ $this->params['breadcrumbs'][] = $this->title;
             //'created_by',
             //'updated_by',
 
-            ['class' => 'app\components\grid\ActionColumn'],
+            [
+                'class' => 'app\components\grid\ActionColumn',
+                'template' => '{view} {delete}'
+            ],
         ],
     ]); ?>
 

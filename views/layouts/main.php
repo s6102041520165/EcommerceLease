@@ -56,7 +56,7 @@ if (!Yii::$app->user->isGuest) {
                                 'items' => [
                                     ['label' => 'ประเภทสินค้า', 'url' => ['/category/index'], 'visible' => Yii::$app->user->can("manageCategory")],
                                     ['label' => 'สินค้า', 'url' => ['/product/index'], 'visible' => Yii::$app->user->can("manageProduct")],
-                                    ['label' => 'ธนาคาร', 'url' => ['/bank/index'], 'visible' => Yii::$app->user->can("manageBank")],
+                                    ['label' => 'ธนาคาร', 'url' => ['/bank/index'], 'visible' => Yii::$app->user->can("manageUser")],
                                     ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['/orders/index'], 'visible' => Yii::$app->user->can("manageOrder")],
                                     ['label' => 'ประวัติการเช่าอุปกรณ์', 'url' => ['/user/index'], 'visible' => Yii::$app->user->can("manageLease")],
                                     ['label' => 'ผู้ใช้', 'url' => ['/user/index'], 'visible' => Yii::$app->user->can("manageUser")],
@@ -67,10 +67,7 @@ if (!Yii::$app->user->isGuest) {
                                 'visible' => !Yii::$app->user->isGuest,
                                 'linkOptions' => ['class' => 'text-white'],
                                 'items' => [
-                                    ['label' => 'ตะกร้าสินค้า', 'url' => ['cart/index'], 'visible' => (Yii::$app->user->can('reserveCart')) ? true : false],
-                                    ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['orders/index'], 'visible' => (Yii::$app->user->can('order')) ? true : false],
-                                    ['label' => 'ประวัติการเช่าอุปกรณ์', 'url' => ['lease/index'], 'visible' => (Yii::$app->user->can('order')) ? true : false],
-                                    ['label' => 'แจ้งชำระเงิน', 'url' => ['payment/index'], 'visible' => (!Yii::$app->user->isGuest) ? true : false],
+
                                     '<div class="dropdown-divider"></div>',
                                     '<div class="dropdown-header">ข้อมูลส่วนตัว</div>',
                                     [
@@ -102,7 +99,7 @@ if (!Yii::$app->user->isGuest) {
                                 'linkOptions' => ['class' => 'text-white'],
                                 'visible' => Yii::$app->user->isGuest
                             ],
-                            
+
                         ],
                         //'options' => ['class' => 'nav-pills'], // set this to nav-tab to get tab-styled navigation
                     ]);
@@ -123,7 +120,10 @@ if (!Yii::$app->user->isGuest) {
         echo Nav::widget([
             'items' => [
                 ['label' => 'หน้าแรก', 'url' => ['/site/index']],
-                ['label' => 'ตะกร้าสินค้า', 'url' => ['/cart']],
+                ['label' => 'ตะกร้าสินค้า', 'url' => ['cart/index'], 'visible' => (Yii::$app->user->can('reserveCart')) ? true : false],
+                ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['orders/index'], 'visible' => (Yii::$app->user->can('order')) ? true : false],
+                ['label' => 'ประวัติการเช่าอุปกรณ์', 'url' => ['lease/index'], 'visible' => (Yii::$app->user->can('order')) ? true : false],
+                ['label' => 'แจ้งชำระเงิน', 'url' => ['payment/index'], 'visible' => (!Yii::$app->user->isGuest) ? true : false],
                 ['label' => 'ติดต่อเรา', 'url' => ['/site/contact']],
             ],
             'dropdownClass' => Dropdown::classname(), // use the custom dropdown
@@ -173,9 +173,9 @@ if (!Yii::$app->user->isGuest) {
 
     <footer class="footer">
         <div class="container">
-            <p class="float-left">&copy; My Company <?= date('Y') ?></p>
+            <p class="float-left">&copy; ร้านเช่ากล้องปัตตานี<?= date('Y') ?></p>
 
-            <p class="float-right"><?= Yii::powered() ?></p>
+            <p class="float-right"><?= "Nanthawan Platong" ?></p>
         </div>
     </footer>
 

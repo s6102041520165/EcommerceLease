@@ -48,7 +48,7 @@ class ProfileController extends Controller
      * Lists all Profile models.
      * @return mixed
      */
-    public function actionIndex()
+/*     public function actionIndex()
     {
         $searchModel = new ProfileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -57,7 +57,7 @@ class ProfileController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-    }
+    } */
 
     /**
      * Displays a single Profile model.

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
 
 /**
  * This is the model class for table "payment".
@@ -34,7 +35,7 @@ class Payment extends \yii\db\ActiveRecord
     {
         return [
             [['receipt_id', 'name', 'source_bank', 'destination_bank', 'slip'], 'required'],
-            [['receipt_id', 'destination_bank'], 'integer'],
+            [['receipt_id', 'destination_bank','created_by','updated_by'], 'integer'],
             [['name', 'location', 'source_bank', 'slip'], 'string', 'max' => 255],
             [['destination_bank'], 'exist', 'skipOnError' => true, 'targetClass' => Bank::className(), 'targetAttribute' => ['destination_bank' => 'id']],
         ];
@@ -53,6 +54,15 @@ class Payment extends \yii\db\ActiveRecord
             'source_bank' => Yii::t('app', 'ธนาคารที่โอน'),
             'destination_bank' => Yii::t('app', 'โอนไปยังธนาคาร'),
             'slip' => Yii::t('app', 'สลิป'),
+            'created_by' => Yii::t('app', 'เพิ่มโดย'),
+            'updated_by' => Yii::t('app', 'แก้ไขโดย')
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            BlameableBehavior::className()
         ];
     }
 
@@ -61,7 +71,7 @@ class Payment extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getDestinationBank()
+    public function getBank()
     {
         return $this->hasOne(Bank::className(), ['id' => 'destination_bank']);
     }

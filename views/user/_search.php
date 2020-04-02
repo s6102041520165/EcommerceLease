@@ -39,8 +39,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'verification_token') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::submitButton('ค้นหา', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('ล้างข้อมูล', ['class' => 'btn btn-outline-secondary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

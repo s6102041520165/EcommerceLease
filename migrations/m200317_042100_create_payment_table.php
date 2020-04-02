@@ -19,7 +19,9 @@ class m200317_042100_create_payment_table extends Migration
             'location' => $this->string(255),
             'source_bank' => $this->string(255)->notNull(),
             'destination_bank' => $this->integer()->notNull(),
-            'slip' => $this->string()->notNull()
+            'slip' => $this->string()->notNull(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
         ]);
 
         $this->addForeignKey(

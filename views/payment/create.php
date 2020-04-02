@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Payment */
 
-$this->title = Yii::t('app', 'Create Payment');
+$this->title = Yii::t('app', 'แจ้งชำระเงิน');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'แจ้งชำระเงิน'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'imageFile' => $imageModel,
     ]) ?>
 
 </div>
