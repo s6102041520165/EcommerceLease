@@ -59,6 +59,7 @@ class Lease extends \yii\db\ActiveRecord
             'due_time' => Yii::t('app', 'เวลาที่คืนสินค้า'),
             'description' => Yii::t('app', 'รายละเอียด'),
             'grand_total' => Yii::t('app', 'ราคารวม'),
+            'status' => Yii::t('app','สถานะ'),
             'created_at' => Yii::t('app', 'เช่าเมื่อ'),
             'created_by' => Yii::t('app', 'เช่าโดย'),
             'updated_at' => Yii::t('app', 'แก้ไขเมื่อ'),
