@@ -127,6 +127,52 @@ class LeaseController extends Controller
         return $this->redirect(['index']);
     }
 
+    // สัญญา
+    public function actionContract($id)
+    {
+        $model = $this->findModel($id);
+
+        // setup kartik\mpdf\Pdf component
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            'content' => $this->renderPartial('receipt', ['model' => $model]),
+            'options' => [
+                // any mpdf options you wish to set
+            ],
+            'methods' => [
+                'SetTitle' => 'สัญญาค้ำประกันการเช่าอุปกรณ์ถ่ายภาพ ร้านเช่ากล้อง ปัตตานี',
+                //'SetFooter' => ['|Page {PAGENO}|'],
+            ]
+        ]);
+
+        $defaultConfig = (new ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+
+        $defaultFontConfig = (new FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+
+        $pdf->options['fontDir'] = array_merge($fontDirs, [
+            Yii::getAlias('@webroot') . '/fonts'
+        ]);
+
+
+        $pdf->options['fontdata'] = $fontData + [
+            'thsarabun' => [
+                'R' => 'THSarabun.ttf',
+            ]
+
+        ];
+        //'default_font' => 'frutiger'
+
+        $pdf->options['defaultFont'] = 'thsarabun';
+        return $pdf->render();
+        //return $this->render('receipt');
+    }
+
+
     /**
      * Finds the Lease model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
