@@ -49,7 +49,7 @@ class Orders extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'grand_total' => Yii::t('app', 'ราคารวม'),
-            'status' => Yii::t('app', 'Status'),
+            'status' => Yii::t('app', 'สถานะ'),
             'created_at' => Yii::t('app', 'สั่งซื้อเมื่อ'),
             'created_by' => Yii::t('app', 'สั่งซื้อโดย'),
             'updated_at' => Yii::t('app', 'แก้ไขเมื่อ'),
