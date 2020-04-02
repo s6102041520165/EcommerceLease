@@ -1,5 +1,7 @@
 <?php
 
+use app\models\Orders;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -12,7 +14,11 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'receipt_id')->textInput() ?>
+    <?php $receipt = ArrayHelper::map(Orders::findAll(['created_by' => Yii::$app->user->id]), 'id', function ($data) {
+        return $data->id . " - " . $data->creator['username'];
+    }) ?>
+
+    <?= $form->field($model, 'receipt_id')->dropDownList($receipt, ['prompt' => 'กรุณาเลือกเลขที่ใบเสร็จ']) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
@@ -25,7 +31,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'slip')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('app', 'บันทึก'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

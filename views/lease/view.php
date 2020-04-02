@@ -3,6 +3,7 @@
 use app\models\Lease;
 use app\models\LeaseDetail;
 use app\models\OrderDetail;
+use rmrevin\yii\fontawesome\FA;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -11,8 +12,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Lease */
 
-$this->title = "รหัสใบเช่า : ".$model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Leases'), 'url' => ['index']];
+$this->title = "รหัสใบเช่า : " . $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'เช่าอุปกรณ์'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -30,6 +31,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+
+        <?php if ($model->status === 8) : ?>
+            <?php echo Html::a(FA::icon('check-circle') . ' ยืนยัน', ['active', 'id' => $model->id], [
+                'class' => 'btn btn-warning',
+            ]) ?>
+        <?php endif; ?>
+
+        <?php if ($model->status === 10) : ?>
+            <?php echo Html::a(FA::icon('ban') . ' ยกเลิก', ['inactive', 'id' => $model->id], [
+                'class' => 'btn btn-danger',
+            ]) ?>
+        <?php endif; ?>
     </p>
 
     <?= DetailView::widget([
