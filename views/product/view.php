@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Product */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'สินค้า'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -31,16 +31,48 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'description:ntext',
-            'price_for_order',
-            'price_for_lease',
+            [
+                'attribute' => 'picture',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    $imageList = explode(",", $data->picture);
+                    $result = '<div class="col-lg-12>"<img src="' . Yii::getAlias('@web/../../image/') . $imageList[0] . '"
+                    style="width:150px;height:auto" class="img-thumbnail" /></div>';
+                    for ($i = 0; $i < sizeof($imageList); $i++) {
+                        $result .= '<div class="col-lg-4 col-md-4 col-sm-4">';
+
+                        $result .= '<a href="' . Yii::getAlias('@web/../../image/') . $imageList[$i] . '" class="product-thumbnail">';
+                        $result .= '<img src="' . Yii::getAlias('@web/../../image/') . $imageList[$i] . '" alt="' . $imageList[$i] . '" class="img-thumbnail" style="width:50px height:auto">';
+                        $result .= '</a>';
+
+                        $result .= '</div>';
+                    }
+                    return $result;
+                }
+            ],
+            'description',
+            'price',
             'stock',
-            'unit_name',
-            'category_id',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'created_by',
+                'value' => function ($data) {
+                    return $data->creator['username'];
+                }
+            ],
+            'created_at:relativeTime',
+            [
+                'attribute' => 'updated_by',
+                'value' => function ($data) {
+                    return $data->creator['username'];
+                }
+            ],
+            'updated_at:relativeTime',
+            [
+                'attribute' => 'category_id',
+                'value' => function ($data) {
+                    return $data->categories['name'];
+                }
+            ]
         ],
     ]) ?>
 
