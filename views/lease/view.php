@@ -11,7 +11,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Lease */
 
-$this->title = $model->id;
+$this->title = "รหัสใบเช่า : ".$model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Leases'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]);
 
     $total = Lease::findOne(['id' => $model->id]);
-    echo "<h1>รายการสินค้าที่สั่งซื้อ</h1>";
+    echo "<h1>รายการสินค้าที่เช่า</h1>";
     echo GridView::widget([
         'dataProvider' => $dataProvider,
         'showFooter' => TRUE,
