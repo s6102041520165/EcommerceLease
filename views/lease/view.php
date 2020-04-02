@@ -78,19 +78,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
-                'attribute' => 'product.price_for_order',
+                'attribute' => 'product.price_for_lease',
                 'value' => function ($data) {
-                    return number_format($data->product['price_for_order']) . " x " . $data->qty;
+                    return number_format($data->product['price_for_lease']) . " x " . $data->qty;
                 },
             ],
             [
-                //'attribute' => 'product.price_for_order',
+                //'attribute' => 'product.price_for_lease',
                 'label' => 'ราคารวม',
                 'contentOptions' => ['style' => 'width: 10%;text-align:right'],
                 'value' => function ($data) {
 
                     // show the amount in money format => 50,000.00
-                    return number_format($data->product['price_for_order'] * $data->qty, 2);
+                    return number_format($data->product['price_for_lease'] * $data->qty, 2);
                 },
                 'filter' => false, //disable the filter for this field
                 // I create the summary function in my Invoice model
