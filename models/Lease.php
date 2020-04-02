@@ -37,11 +37,11 @@ class Lease extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['grand_total','lease_date','due_date'], 'required'],
-            [['lease_date', 'due_date','lease_time', 'due_time'], 'safe'],
+            [['grand_total', 'lease_date', 'due_date', 'lease_time', 'due_time'], 'required'],
+            [['lease_date', 'due_date', 'lease_time', 'due_time'], 'safe'],
             [['description'], 'string'],
             [['grand_total'], 'number'],
-            [['status'],'integer'],
+            [['status'], 'integer'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
         ];
     }
