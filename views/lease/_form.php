@@ -1,5 +1,6 @@
 <?php
 
+use kartik\time\TimePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -24,10 +25,30 @@ use yii\widgets\ActiveForm;
         </div>
 
         <div class="col-lg-6">
+            <?= $form->field($model, 'lease_time')->widget(\janisto\timepicker\TimePicker::classname(), [
+                'mode' => 'time',
+                'clientOptions' => [
+                    'timeFormat' => 'HH:mm:ss',
+                    'showSecond' => true,
+                ]
+            ])  ?>
+        </div>
+
+        <div class="col-lg-6">
             <?= $form->field($model, 'due_date')->widget(\yii\jui\DatePicker::classname(), [
                 'language' => 'th',
                 'dateFormat' => 'yyyy-MM-dd',
                 'options' => ['class' => 'form-control', 'placeholder' => 'วันที่คืน Exam.1997/01/20']
+            ])  ?>
+        </div>
+
+        <div class="col-lg-6">
+            <?= $form->field($model, 'due_time')->widget(\janisto\timepicker\TimePicker::classname(), [
+                'mode' => 'time',
+                'clientOptions' => [
+                    'timeFormat' => 'HH:mm:ss',
+                    'showSecond' => true,
+                ]
             ])  ?>
         </div>
 
