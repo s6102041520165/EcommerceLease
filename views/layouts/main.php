@@ -56,6 +56,7 @@ if (!Yii::$app->user->isGuest) {
                                     ['label' => 'ตะกร้าสินค้า', 'url' => ['cart/index'],],
                                     ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['orders/index'],],
                                     ['label' => 'ประวัติการเช่าสินค้า', 'url' => ['lease/index'],],
+                                    ['label' => 'แจ้งชำระเงิน', 'url' => ['payment/index'],],
                                     '<div class="dropdown-divider"></div>',
                                     '<div class="dropdown-header">ข้อมูลส่วนตัว</div>',
                                     [

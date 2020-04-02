@@ -15,6 +15,11 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+            // uncomment if you want to cache RBAC items hierarchy
+            // 'cache' => 'cache',
+        ],
         /* 'assetManager' => [
             'bundles' => [
                 'rce\material\Assets' => [
@@ -77,6 +82,7 @@ $config = [
                 'encryption' => 'tls',
             ],
         ],
+        
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,

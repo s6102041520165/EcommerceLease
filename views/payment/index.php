@@ -1,5 +1,7 @@
 <?php
 
+use app\models\Bank;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -7,7 +9,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\PaymentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Payments');
+$this->title = Yii::t('app', 'แจ้งชำระเงิน');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="payment-index">
@@ -15,11 +17,24 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Payment'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'แจ้งชำระเงิน'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
+
+    <h3>คุณสามารถแจ้งชำระเงินมาที่บัญชีดังนี้</h3>
+    <?php
+    $bankProvider = new ActiveDataProvider([
+        'query' => Bank::find(),
+        'pagination' => [
+            'pageSize' => 20,
+        ],
+    ]);
+    echo GridView::widget([
+        'dataProvider' => $bankProvider,
+    ]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\LeaseSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Leases');
+$this->title = Yii::t('app', 'เช่าอุปกรณ์');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lease-index">

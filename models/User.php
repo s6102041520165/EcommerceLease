@@ -28,6 +28,8 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    public $role;
+
 
     /**
      * {@inheritdoc}
@@ -55,6 +57,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            [['role'], 'string']
         ];
     }
 
@@ -220,6 +223,19 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getProfile(){
         return $this->hasOne(Profile::className(), ['user_id' => 'id']);
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'รหัสอ้างอิง',
+            'username' => 'ชื่อผู้ใช้',
+            'status' => 'สถานะ',
+            'email' => 'อีเมล',
+            'created_at' => 'สร้างเมื่อ',
+            'updated_at' => 'แก้ไขเมื่อ',
+            'role' => 'ระดับสิทธิ์'
+        ];
     }
     
 }

@@ -68,11 +68,11 @@ class SignupForm extends Model
         $user->save(); //&& $this->sendEmail($user);
         $this->sendEmail($user);
 
-        /*if ($user->id > 1) {
+        if ($user->id > 1) {
             $auth = Yii::$app->authManager;
             $authorRole = $auth->getRole('customer');
             $auth->assign($authorRole, $user->getId());
-        }*/
+        }
 
         return $user;
     }

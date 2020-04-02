@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Bank */
+/* @var $model backend\models\User */
 
-$this->title = Yii::t('app', 'เพิ่มธนาคาร');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ธนาคาร'), 'url' => ['index']];
+$this->title = 'Create User';
+$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="bank-create">
+<div class="user-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

@@ -52,7 +52,7 @@ class Payment extends \yii\db\ActiveRecord
             'location' => Yii::t('app', 'สาขาที่โอน'),
             'source_bank' => Yii::t('app', 'ธนาคารที่โอน'),
             'destination_bank' => Yii::t('app', 'โอนไปยังธนาคาร'),
-            'slip' => Yii::t('app', 'ใบเสร็จ'),
+            'slip' => Yii::t('app', 'สลิป'),
         ];
     }
 
