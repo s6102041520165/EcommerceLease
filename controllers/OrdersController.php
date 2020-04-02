@@ -16,6 +16,7 @@ use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use Mpdf\Config\ConfigVariables;
 use Mpdf\Config\FontVariables;
+use yii\filters\AccessControl;
 
 /**
  * OrdersController implements the CRUD actions for Orders model.
@@ -32,6 +33,17 @@ class OrdersController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['delete'],
+                'rules' => [
+                    [
+                        'actions' => ['delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
@@ -124,7 +136,7 @@ class OrdersController extends Controller
     public function actionReport($date)
     {
         $model = Orders::find()->select(['*'])
-            // ->where(['status' => 10])
+            ->where(['status' => 10])
             ->andWhere(['=', "FROM_UNIXTIME(created_at,'%Y-%m-%d')", $date])
             //->groupBy(["FROM_UNIXTIME(created_at,'%Y-%m-%d')"])
             ->all();

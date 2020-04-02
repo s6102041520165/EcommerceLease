@@ -6,6 +6,7 @@ use Yii;
 use app\models\Profile;
 use app\models\ProfileSearch;
 use app\models\UploadForm;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -27,6 +28,17 @@ class ProfileController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['view','update'],
+                'rules' => [
+                    [
+                        'actions' => ['view','update'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
@@ -53,8 +65,11 @@ class ProfileController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($id = null)
     {
+        if($id === null){
+            $id = Yii::$app->user->id;
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
