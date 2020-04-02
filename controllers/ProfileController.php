@@ -88,7 +88,7 @@ class ProfileController extends Controller
                 $model->picture = $mergeTextPicture;
 
                 //var_dump($model);die();
-                $model->save();
+                $model->save(false);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }

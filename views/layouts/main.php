@@ -82,6 +82,12 @@ if (!Yii::$app->user->isGuest) {
                                 'linkOptions' => ['class' => 'text-white'],
                                 'visible' => Yii::$app->user->isGuest
                             ],
+                            [
+                                'label' => 'ลงทะเบียน',
+                                'url' => ['site/signup'],
+                                'linkOptions' => ['class' => 'text-white'],
+                                'visible' => Yii::$app->user->isGuest
+                            ],
                         ],
                         //'options' => ['class' => 'nav-pills'], // set this to nav-tab to get tab-styled navigation
                     ]);
