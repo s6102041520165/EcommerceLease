@@ -30,7 +30,8 @@ use yii\widgets\ActiveForm;
                 'clientOptions' => [
                     'timeFormat' => 'HH:mm:ss',
                     'showSecond' => true,
-                ]
+                ],
+                'options' => ['placeholder' => 'เวลาที่ต้องการรับสินค้า']
             ])  ?>
         </div>
 
@@ -48,7 +49,8 @@ use yii\widgets\ActiveForm;
                 'clientOptions' => [
                     'timeFormat' => 'HH:mm:ss',
                     'showSecond' => true,
-                ]
+                ],
+                'options' => ['placeholder' => 'เวลาที่ต้องการคืนสินค้า']
             ])  ?>
         </div>
 
