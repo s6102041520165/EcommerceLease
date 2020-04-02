@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'updated_at:relativeTime',
                     //'verification_token',
 
-                    ['class' => 'yii\grid\ActionColumn'],
+                    ['class' => 'app\components\grid\ActionColumn'],
                 ],
             ]); ?>
 

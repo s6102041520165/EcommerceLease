@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'zipcode',
             //'user_id',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'app\components\grid\ActionColumn'],
         ],
     ]); ?>
 

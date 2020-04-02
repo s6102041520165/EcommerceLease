@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'updated_at',
             //'quantity',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'app\components\grid\ActionColumn'],
         ],
     ]); */ ?>
     <ul class="list-group">
