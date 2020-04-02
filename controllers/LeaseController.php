@@ -1,0 +1,145 @@
+<?php
+
+namespace app\controllers;
+
+use app\models\Cart;
+use Yii;
+use app\models\Lease;
+use app\models\LeaseDetail;
+use app\models\LeaseSearch;
+use app\models\Product;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+
+/**
+ * LeaseController implements the CRUD actions for Lease model.
+ */
+class LeaseController extends Controller
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Lists all Lease models.
+     * @return mixed
+     */
+    public function actionIndex()
+    {
+        $searchModel = new LeaseSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Displays a single Lease model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Creates a new Lease model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $cart = Cart::find()->joinWith(['product'])->where(['cart.created_by' => Yii::$app->user->id])->all();
+        $model = new Lease();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            foreach ($cart as $data) {
+                /**Orders Detail set values */
+                $leaseDetail = new LeaseDetail();
+                $leaseDetail->setAttribute('lease_id', $model->id);
+                $leaseDetail->setAttribute('product_id', $data->product_id);
+                $leaseDetail->setAttribute('qty', $data->quantity);
+                /**Insert order detail table */
+                $leaseDetail->save();
+            }
+            /**Deleted all product in cart */
+            Cart::deleteAll(['cart.created_by' => Yii::$app->user->id]);
+
+            Yii::$app->session->setFlash('success', 'บันทึกข้อมูลการเช่าสำเร็จ');
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+
+    /**
+     * Updates an existing Lease model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Deletes an existing Lease model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the Lease model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Lease the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Lease::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+}
