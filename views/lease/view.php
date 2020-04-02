@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'แก้ไข'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'สัญญาเช่า'), ['update', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
+        <?= Html::a(Yii::t('app', 'สัญญาเช่า'), ['contract', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
         <?= Html::a(Yii::t('app', 'ลบ'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
