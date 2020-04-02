@@ -14,17 +14,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Lease'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); 
-    ?>
+    <div class="card card-default">
+        <div class="card-body">
+            <?php echo $this->render('_search', ['model' => $searchModel]);
+            ?>
+        </div>
+    </div>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -36,6 +36,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'grand_total',
                 'value' => function ($data) {
                     return number_format($data->grand_total);
+                }
+            ],
+            [
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    $badge = ($data->status === 8) ? "badge-warning" : "badge-success";
+                    return "<span class='badge $badge'>" . (($data->status === 8) ? "กำลังดำเนินการ" : "ได้รับการยืนยันแล้ว") . "</span>";
                 }
             ],
             //'created_at',
