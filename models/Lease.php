@@ -38,7 +38,7 @@ class Lease extends \yii\db\ActiveRecord
     {
         return [
             [['grand_total','lease_date','due_date'], 'required'],
-            [['lease_date', 'due_date'], 'safe'],
+            [['lease_date', 'due_date','lease_time', 'due_time'], 'safe'],
             [['description'], 'string'],
             [['grand_total'], 'number'],
             [['status'],'integer'],
@@ -54,7 +54,9 @@ class Lease extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'รหัสการเช่า'),
             'lease_date' => Yii::t('app', 'วันที่รับสินค้า'),
+            'lease_time' => Yii::t('app', 'เวลาที่รับสินค้า'),
             'due_date' => Yii::t('app', 'วันที่คืนสินค้า'),
+            'due_time' => Yii::t('app', 'เวลาที่คืนสินค้า'),
             'description' => Yii::t('app', 'รายละเอียด'),
             'grand_total' => Yii::t('app', 'ราคารวม'),
             'created_at' => Yii::t('app', 'เช่าเมื่อ'),

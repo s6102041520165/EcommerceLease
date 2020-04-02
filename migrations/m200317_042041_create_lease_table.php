@@ -15,7 +15,9 @@ class m200317_042041_create_lease_table extends Migration
         $this->createTable('{{%lease}}', [
             'id' => $this->primaryKey(),
             'lease_date' => $this->date()->notNull(),
+            'lease_time' => $this->time()->notNull(),
             'due_date' => $this->date()->notNull(),
+            'due_time' => $this->time()->notNull(),
             'description' => $this->text(),
             'grand_total' => $this->double()->notNull(),
             'created_at' => $this->integer(),
