@@ -59,7 +59,7 @@ if (!Yii::$app->user->isGuest) {
                                     ['label' => 'ธนาคาร', 'url' => ['/bank/index'], 'visible' => Yii::$app->user->can("manageBank")],
                                     ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['/orders/index'], 'visible' => Yii::$app->user->can("manageOrder")],
                                     ['label' => 'ประวัติการเช่าอุปกรณ์', 'url' => ['/user/index'], 'visible' => Yii::$app->user->can("manageLease")],
-                                    ['label' => 'ผู้ใช้', 'url' => ['/user/index']],
+                                    ['label' => 'ผู้ใช้', 'url' => ['/user/index'], 'visible' => Yii::$app->user->can("manageUser")],
                                 ]
                             ],
                             [
