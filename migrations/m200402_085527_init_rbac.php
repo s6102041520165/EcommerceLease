@@ -36,6 +36,10 @@ class m200402_085527_init_rbac extends Migration
         $manageOrder->description = 'manageOrder';
         $auth->add($manageOrder);
 
+        $order = $auth->createPermission('order');
+        $order->description = 'order';
+        $auth->add($order);
+
         // add "activeOrder" permission 
         $activeOrder = $auth->createPermission('activeOrder');
         $activeOrder->description = 'activeOrder';
@@ -88,6 +92,7 @@ class m200402_085527_init_rbac extends Migration
         $auth->addChild($customer, $manageProfile);
         $auth->addChild($customer, $reserveCart);
         $auth->addChild($customer, $lease);
+        $auth->addChild($customer, $order);
         $auth->addChild($customer, $managePayment);
 
 

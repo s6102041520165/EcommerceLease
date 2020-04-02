@@ -53,8 +53,9 @@ if (!Yii::$app->user->isGuest) {
                                 'visible' => !Yii::$app->user->isGuest,
                                 'linkOptions' => ['class' => 'text-white'],
                                 'items' => [
-                                    ['label' => 'ตะกร้าสินค้า', 'url' => ['cart/index'],],
-                                    ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['orders/index'],],
+                                    ['label' => 'ตะกร้าสินค้า', 'url' => ['cart/index'], 'visible' => (Yii::$app->user->can('reserveCart')) ? true : false],
+                                    ['label' => 'รายการอุปกรณ์ที่เช่า', 'url' => ['cart/index'], 'visible' => ((Yii::$app->user->can('manageLease')) || Yii::$app->user->can('lease')) ? true : false],
+                                    ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['orders/index'], 'visible' => (Yii::$app->user->can('order')) ? true : false],
                                     ['label' => 'ประวัติการเช่าสินค้า', 'url' => ['lease/index'],],
                                     ['label' => 'แจ้งชำระเงิน', 'url' => ['payment/index'],],
                                     '<div class="dropdown-divider"></div>',
