@@ -37,10 +37,15 @@ class OrdersController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['delete'],
+                'only' => ['delete','create','update','active','index','view'],
                 'rules' => [
                     [
-                        'actions' => ['delete'],
+                        'actions' => ['create','update','active'],
+                        'allow' => true,
+                        'roles' => ['manageOrder'],
+                    ],
+                    [
+                        'actions' => ['index','view','delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

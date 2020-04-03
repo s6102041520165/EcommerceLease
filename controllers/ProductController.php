@@ -33,12 +33,17 @@ class ProductController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','create','update','delete','view'],
+                'only' => ['index','create','update','delete','view','cart'],
                 'rules' => [
                     [
                         'allow' => true,
                         'actions' => ['index','create','update','delete','view'],
                         'roles' => ['@','manageProduct'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['cart'],
+                        'roles' => ['@'],
                     ],
                 ],
             ],

@@ -76,8 +76,8 @@ $config = [
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'ns13.hostinglotus.net',
-                'username' => 'greater-mobile@clkeengroup.com',
-                'password' => '0oVB8WchGm',
+                'username' => 'nanthawan@clkeengroup.com',
+                'password' => 'User123456!',
                 'port' => '587',
                 'encryption' => 'tls',
             ],

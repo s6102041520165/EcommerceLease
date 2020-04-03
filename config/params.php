@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'adminEmail' => 'greater-mobile@clkeengroup.com',
-    'supportEmail' => 'greater-mobile@clkeengroup.com',
-    'senderEmail' => 'greater-mobile@clkeengroup.com',
-    'senderName' => 'Greater Mobile',
+    'adminEmail' => 'nanthawan@clkeengroup.com',
+    'supportEmail' => 'nanthawan@clkeengroup.com',
+    'senderEmail' => 'nanthawan@clkeengroup.com',
+    'senderName' => 'ร้านเช่ากล้องปัตตานี',
     'user.passwordResetTokenExpire' => 3600,
 ];
