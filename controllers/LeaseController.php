@@ -40,12 +40,12 @@ class LeaseController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['update','delete',],
+                        'actions' => ['index','update','create','view','delete'],
                         'roles' => ['manageLease'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index','create','view'],
+                        'actions' => ['index','update','create','view','delete'],
                         'roles' => ['lease'],
                     ],
                 ],
@@ -116,7 +116,11 @@ class LeaseController extends Controller
                 $leaseDetail->setAttribute('lease_id', $model->id);
                 $leaseDetail->setAttribute('product_id', $data->product_id);
                 $leaseDetail->setAttribute('qty', $data->quantity);
+                //ตัดสต็อก
+                $product = Product::findOne(['id' => $leaseDetail->product_id]); 
+                $product->setAttribute('stock', $product->stock - $leaseDetail->qty);
                 /**Insert order detail table */
+                $product->save();
                 $leaseDetail->save();
             }
             /**Deleted all product in cart */
@@ -178,9 +182,6 @@ class LeaseController extends Controller
             'orientation' => Pdf::ORIENT_PORTRAIT,
             'destination' => Pdf::DEST_BROWSER,
             'content' => $this->renderPartial('contract', ['model' => $model]),
-            'options' => [
-                // any mpdf options you wish to set
-            ],
             'methods' => [
                 'SetTitle' => 'สัญญาค้ำประกันการเช่าอุปกรณ์ถ่ายภาพ ร้านเช่ากล้อง ปัตตานี',
                 //'SetFooter' => ['|Page {PAGENO}|'],
