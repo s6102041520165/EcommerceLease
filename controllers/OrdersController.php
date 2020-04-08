@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\DatePicker;
 use app\models\OrderDetail;
 use Yii;
 use app\models\Orders;
@@ -37,15 +38,15 @@ class OrdersController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['delete','create','update','active','index','view'],
+                'only' => ['delete', 'create', 'update', 'active', 'index', 'view'],
                 'rules' => [
                     [
-                        'actions' => ['create','update','active'],
+                        'actions' => ['create', 'update', 'active'],
                         'allow' => true,
                         'roles' => ['manageOrder'],
                     ],
                     [
-                        'actions' => ['index','view','delete'],
+                        'actions' => ['index', 'view', 'delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -138,53 +139,65 @@ class OrdersController extends Controller
         return $this->redirect(['view', 'id' => $id]);
     }
 
+    public function actionPicker()
+    {
+        $model = new DatePicker();
+        if ($model->load(Yii::$app->request->queryParams)) {
+            return $this->redirect(['report', 'date' => $model->dateInput]);
+        }
+        return $this->render('_picker', ['model' => $model]);
+    }
+
     public function actionReport($date)
     {
-        $model = Orders::find()->select(['*'])
-            ->where(['status' => 10])
-            ->andWhere(['=', "FROM_UNIXTIME(created_at,'%Y-%m-%d')", $date])
-            //->groupBy(["FROM_UNIXTIME(created_at,'%Y-%m-%d')"])
-            ->all();
-        //$model = $this->findModel($id);
+        if ($date != null) {
+            $model = Orders::find()->select(['*'])
+                ->where(['status' => 10])
+                ->andWhere(['=', "FROM_UNIXTIME(created_at,'%Y-%m-%d')", $date])
+                //->groupBy(["FROM_UNIXTIME(created_at,'%Y-%m-%d')"])
+                ->all();
+            //$model = $this->findModel($id);
 
-        // setup kartik\mpdf\Pdf component
-        $pdf = new Pdf([
-            'mode' => Pdf::MODE_UTF8,
-            'format' => Pdf::FORMAT_A4,
-            'orientation' => Pdf::ORIENT_PORTRAIT,
-            'destination' => Pdf::DEST_BROWSER,
-            'content' => $this->renderPartial('report', ['model' => $model]),
-            'options' => [
-                // any mpdf options you wish to set
-            ],
-            'methods' => [
-                'SetTitle' => 'สรุปรายการสั่งซื้อ',
-                //'SetFooter' => ['|Page {PAGENO}|'],
-            ]
-        ]);
+            // setup kartik\mpdf\Pdf component
+            $pdf = new Pdf([
+                'mode' => Pdf::MODE_UTF8,
+                'format' => Pdf::FORMAT_A4,
+                'orientation' => Pdf::ORIENT_PORTRAIT,
+                'destination' => Pdf::DEST_BROWSER,
+                'content' => $this->renderPartial('report', ['model' => $model]),
+                'options' => [
+                    // any mpdf options you wish to set
+                ],
+                'methods' => [
+                    'SetTitle' => 'สรุปรายการสั่งซื้อ',
+                    //'SetFooter' => ['|Page {PAGENO}|'],
+                ]
+            ]);
 
-        $defaultConfig = (new ConfigVariables())->getDefaults();
-        $fontDirs = $defaultConfig['fontDir'];
+            $defaultConfig = (new ConfigVariables())->getDefaults();
+            $fontDirs = $defaultConfig['fontDir'];
 
-        $defaultFontConfig = (new FontVariables())->getDefaults();
-        $fontData = $defaultFontConfig['fontdata'];
+            $defaultFontConfig = (new FontVariables())->getDefaults();
+            $fontData = $defaultFontConfig['fontdata'];
 
-        $pdf->options['fontDir'] = array_merge($fontDirs, [
-            Yii::getAlias('@webroot') . '/fonts'
-        ]);
+            $pdf->options['fontDir'] = array_merge($fontDirs, [
+                Yii::getAlias('@webroot') . '/fonts'
+            ]);
 
 
-        $pdf->options['fontdata'] = $fontData + [
-            'thsarabun' => [
-                'R' => 'THSarabun.ttf',
-            ]
+            $pdf->options['fontdata'] = $fontData + [
+                'thsarabun' => [
+                    'R' => 'THSarabun.ttf',
+                ]
 
-        ];
-        //'default_font' => 'frutiger'
+            ];
+            //'default_font' => 'frutiger'
 
-        $pdf->options['defaultFont'] = 'thsarabun';
-        return $pdf->render();
-        //return $this->render('receipt');
+            $pdf->options['defaultFont'] = 'thsarabun';
+            return $pdf->render();
+        } else {
+            throw new NotFoundHttpException('ไม่พบหน้าที่ร้องขอ');
+        }
     }
 
     public function actionReceipt($id)

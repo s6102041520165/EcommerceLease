@@ -9,10 +9,7 @@ use yii\helpers\Html;
     <div class="card-body text-center">
         <img class="img-thumbnail rounded" src="<?= Yii::getAlias('@web/image/') . $image[0]; ?>" alt="">
 
-        <?php
-
-        echo $sum;
-        ?>
+       
         <h3><?= $model->name; ?></h3>
         <p class="text-danger">ราคาสั่งซื้อ <?= number_format($model->price_for_order) ?> บาท<br />ราคาเช่า <?= number_format($model->price_for_lease) ?> บาท</p>
         <?php
