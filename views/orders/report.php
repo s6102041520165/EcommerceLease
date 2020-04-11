@@ -24,7 +24,7 @@ $round = count($model);
 ?>
 
 <div style="font-family: thsarabun;">
-    <h3 style="text-align:center;font-weight:bold">รายงานยอดขาดวันที่ <?php echo date("d-M-Y", $model[0]->created_at) ?></h3>
+    <h3 style="text-align:center;font-weight:bold">รายงานยอดขาดวันที่ <?php echo Yii::$app->formatter->asDate($reportDate);?></h3>
     <table style="font-family: thsarabun;font-size:16pt;font-family:thsarabun;width:100%;" border="1">
         <tr>
             <th style="text-align: center">#</th>

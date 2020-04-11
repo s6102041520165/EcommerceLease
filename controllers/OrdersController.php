@@ -38,10 +38,10 @@ class OrdersController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['delete', 'create', 'update', 'active', 'index', 'view'],
+                'only' => ['delete', 'create', 'update', 'active', 'index', 'view', 'picker'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'update', 'active'],
+                        'actions' => ['create', 'update', 'active', 'picker'],
                         'allow' => true,
                         'roles' => ['manageOrder'],
                     ],
@@ -164,7 +164,10 @@ class OrdersController extends Controller
                 'format' => Pdf::FORMAT_A4,
                 'orientation' => Pdf::ORIENT_PORTRAIT,
                 'destination' => Pdf::DEST_BROWSER,
-                'content' => $this->renderPartial('report', ['model' => $model]),
+                'content' => $this->renderPartial('report', [
+                    'model' => $model,
+                    'reportDate' => $date
+                ]),
                 'options' => [
                     // any mpdf options you wish to set
                 ],

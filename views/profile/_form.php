@@ -27,12 +27,16 @@ use yii\widgets\ActiveForm;
             <?= $form->field($imageFile, 'imageFiles[]')->fileInput() ?>
         </div>
 
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <?= $form->field($model, 'dob')->widget(\yii\jui\DatePicker::classname(), [
                 'language' => 'th',
                 'dateFormat' => 'yyyy-MM-dd',
                 'options' => ['class' => 'form-control', 'placeholder' => '1997/01/20']
             ]) ?>
+        </div>
+
+        <div class="col-lg-6">
+            <?= $form->field($model, 'telephone')->textInput(['maxlength' => true]) ?>
         </div>
 
         <div class="col-lg-12">

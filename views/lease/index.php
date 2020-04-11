@@ -42,8 +42,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'status',
                 'format' => 'raw',
                 'value' => function ($data) {
+                    $status = "";
+                    if ($data->status === 8) {
+                        $status = "กำลังดำเนินการ";
+                    } else if ($data->status === 10) {
+                        $status = "ยืนยันแล้ว";
+                    } else
+                        $status = "คืนแล้ว";
                     $badge = ($data->status === 8) ? "badge-warning" : "badge-success";
-                    return "<span class='badge $badge'>" . (($data->status === 8) ? "กำลังดำเนินการ" : "ได้รับการยืนยันแล้ว") . "</span>";
+                    return "<span class='badge $badge'>" . $status . "</span>";
                 }
             ],
             //'created_at',

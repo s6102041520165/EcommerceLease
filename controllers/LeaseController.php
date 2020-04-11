@@ -36,16 +36,16 @@ class LeaseController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create','update','delete','view','index'],
+                'only' => ['create', 'update', 'delete', 'view', 'index', 'return', 'active', 'inactive'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index','update','create','view','delete'],
+                        'actions' => ['index', 'update', 'create', 'view', 'delete', 'return', 'active', 'inactive'],
                         'roles' => ['manageLease'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index','update','create','view','delete'],
+                        'actions' => ['index', 'update', 'create', 'view', 'delete'],
                         'roles' => ['lease'],
                     ],
                 ],
@@ -66,6 +66,23 @@ class LeaseController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function actionReturn($id)
+    {
+        $lease = $this->findModel($id);
+        if ($lease->status === 10) {
+            $lease->setAttribute('status', 11);
+            $lease->save();
+            $leaseDetail = LeaseDetail::findAll(['lease_id' => $lease->id]);
+            foreach ($leaseDetail as $detail) {
+                $product = Product::findOne(['id' => $detail->product_id]);
+                $product->setAttribute('stock', $product->stock + $detail->qty);
+                $product->save();
+            }
+        }
+
+        return $this->redirect(['view', 'id' => $id]);
     }
 
     /**
@@ -117,7 +134,7 @@ class LeaseController extends Controller
                 $leaseDetail->setAttribute('product_id', $data->product_id);
                 $leaseDetail->setAttribute('qty', $data->quantity);
                 //ตัดสต็อก
-                $product = Product::findOne(['id' => $leaseDetail->product_id]); 
+                $product = Product::findOne(['id' => $leaseDetail->product_id]);
                 $product->setAttribute('stock', $product->stock - $leaseDetail->qty);
                 /**Insert order detail table */
                 $product->save();
@@ -202,6 +219,7 @@ class LeaseController extends Controller
         $pdf->options['fontdata'] = $fontData + [
             'thsarabun' => [
                 'R' => 'THSarabun.ttf',
+                'B' => 'THSarabunBold.ttf'
             ]
 
         ];

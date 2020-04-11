@@ -32,10 +32,10 @@ class ProfileController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['view','update'],
+                'only' => ['view', 'update'],
                 'rules' => [
                     [
-                        'actions' => ['view','update'],
+                        'actions' => ['view', 'update'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -48,7 +48,7 @@ class ProfileController extends Controller
      * Lists all Profile models.
      * @return mixed
      */
-/*     public function actionIndex()
+    /*     public function actionIndex()
     {
         $searchModel = new ProfileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -67,7 +67,7 @@ class ProfileController extends Controller
      */
     public function actionView($id = null)
     {
-        if($id === null){
+        if ($id === null) {
             $id = Yii::$app->user->id;
         }
         return $this->render('view', [
@@ -84,7 +84,7 @@ class ProfileController extends Controller
     {
         $model = new Profile();
         $uploadSingleFile = new UploadForm();
-        if(Profile::findOne(['user_id' => Yii::$app->user->id])!=null){
+        if (Profile::findOne(['user_id' => Yii::$app->user->id]) != null) {
             throw new ForbiddenHttpException('ไม่สามารถเพิ่มโปรไฟล์ซ้ำได้');
         }
 
@@ -143,11 +143,9 @@ class ProfileController extends Controller
                 $mergeTextPicture = implode(',', $picture);
 
                 $model->picture = $mergeTextPicture;
-
-
-                $model->save(false);
-                return $this->redirect(['view', 'id' => $model->id]);
             }
+            $model->save(false);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
 

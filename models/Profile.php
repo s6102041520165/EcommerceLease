@@ -38,13 +38,16 @@ class Profile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['f_name', 'l_name', 'dob', 'subdistrict', 'district', 'province', 'zipcode','user_id'], 'required'],
+            [['f_name', 'l_name', 'dob', 'subdistrict', 'district', 'province', 'zipcode', 'user_id', 'telephone'], 'required'],
             [['dob'], 'safe'],
+            ['dob', 'date', 'format' => 'yyyy-MM-dd'],
             [['address'], 'string'],
             [['user_id'], 'integer'],
             [['f_name', 'l_name', 'picture'], 'string', 'max' => 50],
             [['subdistrict', 'district', 'province'], 'string', 'max' => 255],
             [['zipcode'], 'string', 'max' => 6],
+            [['telephone'], 'string', 'min' => 10, 'max' => 10],
+            ['telephone', 'match', 'pattern' => '/^([0-9]){10}/i'],
             [['user_id'], 'unique'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -60,12 +63,13 @@ class Profile extends \yii\db\ActiveRecord
             'f_name' => Yii::t('app', 'ชื่อ'),
             'l_name' => Yii::t('app', 'นามสกุล'),
             'picture' => Yii::t('app', 'รูปภาพ'),
-            'dob' => Yii::t('app', 'วัน/เดือน/ปี เกิด'),
+            'dob' => Yii::t('app', 'ปี/เดือน/วัน เกิด'),
             'address' => Yii::t('app', 'ที่อยู่'),
             'subdistrict' => Yii::t('app', 'ตำบล'),
             'district' => Yii::t('app', 'อำเภอ'),
             'province' => Yii::t('app', 'จังหวัด'),
             'zipcode' => Yii::t('app', 'รหัสไปรษณีย์'),
+            'telephone' => Yii::t('app', 'เบอร์โทรศัพท์'),
             'user_id' => Yii::t('app', 'ผู้ใช้'),
         ];
     }

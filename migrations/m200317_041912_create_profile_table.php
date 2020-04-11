@@ -23,6 +23,7 @@ class m200317_041912_create_profile_table extends Migration
             'district' => $this->string(255)->notNull(),
             'province' => $this->string(255)->notNull(),
             'zipcode' => $this->string(6)->notNull(),
+            'telephone' => $this->string(11)->notNull(),
             'user_id' => $this->integer()->unique()->notNull(),
         ]);
 

@@ -110,6 +110,7 @@ class m200402_085527_init_rbac extends Migration
         $auth->addChild($employee, $manageProduct);
         $auth->addChild($employee, $manageCategory);
         $auth->addChild($employee, $manageOrder);
+        $auth->addChild($employee, $manageLease);
         $auth->addChild($employee, $activeOrder);
         $auth->addChild($employee, $customer); //ทำทุกอย่างที่ลูกค้าทำได้  
 

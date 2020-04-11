@@ -22,9 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'แก้ไข'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'สัญญาเช่า'), ['contract', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
-        <?= Html::a(Yii::t('app', 'ลบ'), ['delete', 'id' => $model->id], [
+        <?= Html::a(FA::icon('edit') . ' แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(FA::icon('print') . ' สัญญาเช่า', ['contract', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
+        <?= Html::a(FA::icon('trash') . ' ลบ', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => Yii::t('app', 'คุณต้องการลบรายการนี้ใช่หรือไม่'),
@@ -32,13 +32,19 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
 
-        <?php if ($model->status === 8) : ?>
+        <?php if ($model->status === 8 && Yii::$app->user->can("manageLease")) : ?>
             <?php echo Html::a(FA::icon('check-circle') . ' ยืนยัน', ['active', 'id' => $model->id], [
                 'class' => 'btn btn-warning',
             ]) ?>
         <?php endif; ?>
 
-        <?php if ($model->status === 10) : ?>
+        <?php if ($model->status === 10 && Yii::$app->user->can("manageLease")) : ?>
+            <?php echo Html::a(FA::icon('retweet') . ' คืนแล้ว', ['return', 'id' => $model->id], [
+                'class' => 'btn btn-success',
+            ]) ?>
+        <?php endif; ?>
+
+        <?php if ($model->status === 10 && Yii::$app->user->can("manageLease")) : ?>
             <?php echo Html::a(FA::icon('ban') . ' ยกเลิก', ['inactive', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
             ]) ?>
@@ -68,6 +74,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'updated_at:relativeTime',
+            [
+                'attribute' => 'status',
+                'value' => function($data){
+                    $status = '';
+                    if($data->status === 8) {
+                        $status = 'รอดำเนินการ';
+                    } else if($data->status === 10){
+                        $status = 'ยืนยันแล้ว';
+                    }else if($data->status === 11){
+                        $status = 'คืนแล้ว';
+                    }
+                    return $status;
+                }
+            ]
         ],
     ]) ?>
 

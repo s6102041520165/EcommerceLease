@@ -55,11 +55,18 @@ if (!Yii::$app->user->isGuest) {
                                 'visible' => Yii::$app->user->can('manageProduct'),
                                 'items' => [
                                     ['label' => 'ประเภทสินค้า', 'url' => ['/category/index'], 'visible' => Yii::$app->user->can("manageCategory")],
+
                                     ['label' => 'สินค้า', 'url' => ['/product/index'], 'visible' => Yii::$app->user->can("manageProduct")],
+
                                     ['label' => 'ธนาคาร', 'url' => ['/bank/index'], 'visible' => Yii::$app->user->can("manageUser")],
+
                                     ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['/orders/index'], 'visible' => Yii::$app->user->can("manageOrder")],
-                                    ['label' => 'ประวัติการเช่าอุปกรณ์', 'url' => ['/user/index'], 'visible' => Yii::$app->user->can("manageLease")],
+
+                                    ['label' => 'ประวัติการเช่าอุปกรณ์', 'url' => ['/lease/index'], 'visible' => Yii::$app->user->can("manageLease")],
+
                                     ['label' => 'ผู้ใช้', 'url' => ['/user/index'], 'visible' => Yii::$app->user->can("manageUser")],
+
+                                    ['label' => 'รายงานการสั่งซื้อ', 'url' => ['/orders/picker'], 'visible' => Yii::$app->user->can("manageOrder")],
                                 ]
                             ],
                             [
@@ -174,8 +181,17 @@ if (!Yii::$app->user->isGuest) {
     <footer class="footer">
         <div class="container">
             <p class="float-left">&copy; ร้านเช่ากล้องปัตตานี<?= date('Y') ?></p>
-
-            <p class="float-right"><?= "Nanthawan Platong" ?></p>
+            <?php $role = "ผู้เยี่ยมชม"; ?>
+            <?php if(!Yii::$app->user->isGuest){
+                if(Yii::$app->authManager->getAssignment('employee', Yii::$app->user->id) !==null){
+                    $role = "พนักงาน";
+                } elseif (Yii::$app->authManager->getAssignment('admin', Yii::$app->user->id) !==null) {
+                    $role = "ผู้ดูแลระบบ";
+                } else {
+                    $role = "ลูกค้า";
+                }
+            } ?>
+            <p class="float-right">สถานะผู้ใช้ : <?= $role ?></p>
         </div>
     </footer>
 

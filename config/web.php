@@ -82,6 +82,12 @@ $config = [
                 'encryption' => 'tls',
             ],
         ],
+        'formatter' => [
+            'dateFormat' => 'yyyy.MM.dd',
+            'decimalSeparator' => ',',
+            'thousandSeparator' => ' ',
+            'currencyCode' => 'EUR',
+       ],
         
         /*
         'urlManager' => [
