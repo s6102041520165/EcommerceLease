@@ -28,7 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'name',
-            'sub_category',
+            [
+                'attribute' => 'sub_category',
+                'value' => function ($data) {
+                    return ($data->sub_category) ? $data->subCategory['name'] : "";
+                }
+            ],
 
             ['class' => 'app\components\grid\ActionColumn'],
         ],

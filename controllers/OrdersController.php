@@ -143,17 +143,17 @@ class OrdersController extends Controller
     {
         $model = new DatePicker();
         if ($model->load(Yii::$app->request->queryParams)) {
-            return $this->redirect(['report', 'date' => $model->dateInput]);
+            return $this->redirect(['report', 'dateStart' => $model->dateStart, 'dateEnd' => $model->dateEnd]);
         }
         return $this->render('_picker', ['model' => $model]);
     }
 
-    public function actionReport($date)
+    public function actionReport($dateStart, $dateEnd)
     {
-        if ($date != null) {
+        if ($dateStart != null) {
             $model = Orders::find()->select(['*'])
                 ->where(['status' => 10])
-                ->andWhere(['=', "FROM_UNIXTIME(created_at,'%Y-%m-%d')", $date])
+                ->andWhere(['between', "FROM_UNIXTIME(created_at,'%Y-%m-%d')", $dateStart, $dateEnd])
                 //->groupBy(["FROM_UNIXTIME(created_at,'%Y-%m-%d')"])
                 ->all();
             //$model = $this->findModel($id);
@@ -166,7 +166,7 @@ class OrdersController extends Controller
                 'destination' => Pdf::DEST_BROWSER,
                 'content' => $this->renderPartial('report', [
                     'model' => $model,
-                    'reportDate' => $date
+                    'reportDate' => [$dateStart, $dateEnd]
                 ]),
                 'options' => [
                     // any mpdf options you wish to set

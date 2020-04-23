@@ -24,12 +24,12 @@ $round = count($model);
 ?>
 
 <div style="font-family: thsarabun;">
-    <h3 style="text-align:center;font-weight:bold">รายงานยอดขาดวันที่ <?php echo Yii::$app->formatter->asDate($reportDate);?></h3>
+    <h3 style="text-align:center;font-weight:bold">รายงานยอดขายตั้งแต่วันที่ <?php echo Yii::$app->formatter->asDate($reportDate[0]);?> ถึง <?php echo Yii::$app->formatter->asDate($reportDate[1]);?></h3>
     <table style="font-family: thsarabun;font-size:16pt;font-family:thsarabun;width:100%;" border="1">
         <tr>
             <th style="text-align: center">#</th>
             <th style="text-align: center">รายการสั่งซื้อที่</th>
-            <th style="text-align:center;">เวลา</th>
+            <th style="text-align:center;">วันที่/เวลา</th>
             <th style="text-align: center">ราคา</th>
         </tr>
 
@@ -41,7 +41,7 @@ $round = count($model);
             <tr>
                 <td style="text-align: center;"><?php echo $i + 1; ?></td>
                 <td><?php echo $model[$i]->id; ?></td>
-                <td><?php echo date("H:m:s",$model[$i]->created_at); ?></td>
+                <td><?php echo Yii::$app->formatter->asDatetime($model[$i]->created_at); ?></td>
                 <td style="text-align: right;"><?php echo number_format($model[$i]->grand_total,2); ?></td>
             </tr>
         <?php

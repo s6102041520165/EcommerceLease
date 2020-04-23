@@ -39,7 +39,7 @@ class CartController extends Controller
                 'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['index','checkout','plus','minus','create','update'],
+                        'actions' => ['index', 'checkout', 'plus', 'minus', 'create', 'update'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -73,15 +73,11 @@ class CartController extends Controller
 
         //ถ้ามีการเปลี่ยนแปลงข้อมูลส่วนตัวให้บันทึกข้อมูลก่อน
         if ($profile->load(Yii::$app->request->post()) && $profile->save()) {
-            if (Yii::$app->request->post('typeButton') === "lease") {
-                /*$id = $this->saveLease();
-                return $this->redirect(['/lease/update', 'id' => $id]);*/
-            } else {
-                $_user = User::findOne(['id' => Yii::$app->user->id]);
-                $orderId = $this->saveOrder();
-                $this->sendEmail($_user, $orderId);
-                return $this->redirect(['/orders/index']);
-            }
+
+            $_user = User::findOne(['id' => Yii::$app->user->id]);
+            $orderId = $this->saveOrder();
+            $this->sendEmail($_user, $orderId);
+            return $this->redirect(['/orders/index']);
 
             return $this->redirect(['checkout']);
         }
@@ -137,7 +133,7 @@ class CartController extends Controller
         return Yii::$app
             ->mailer
             ->compose(
-                ['html' => 'orderVerify-html','text' => 'orderVerify-text'],
+                ['html' => 'orderVerify-html', 'text' => 'orderVerify-text'],
                 ['user' => $user, 'id' => $orderId],
             )
             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name])

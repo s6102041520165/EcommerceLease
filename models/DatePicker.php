@@ -4,20 +4,22 @@ namespace app\models;
 
 class DatePicker extends \yii\base\Model
 {
-    public $dateInput;
+    public $dateStart;
+    public $dateEnd;
 
     public function rules()
     {
         return [
-            [['dateInput'], 'required'],
-            [['dateInput'], 'safe']
+            [['dateStart','dateEnd'], 'required'],
+            [['dateStart','dateEnd'], 'safe']
         ];
     }
 
     public function attributeLabels()
     {
         return [
-            'dateInput' => 'รายงานประจำวัน'
+            'dateStart' => 'วันที่เริ่มต้น',
+            'dateEnd' => 'วันที่สิ้นสุด'
         ];
     }
 }

@@ -33,6 +33,7 @@ class Category extends \yii\db\ActiveRecord
             [['sub_category'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique'],
+            [['sub_category'], 'exist', 'skipOnError' => true, 'targetClass' => $this::className(), 'targetAttribute' => ['sub_category' => 'id']],
         ];
     }
 
@@ -44,7 +45,7 @@ class Category extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'รหัสอ้างอิง'),
             'name' => Yii::t('app', 'ประเภทสินค้า'),
-            'sub_category' => Yii::t('app', 'กลุ่มประเภทสินค้า'),
+            'sub_category' => Yii::t('app', 'ประเภทสินค้าหลัก'),
         ];
     }
 

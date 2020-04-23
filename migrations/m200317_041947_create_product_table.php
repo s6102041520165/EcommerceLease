@@ -17,6 +17,7 @@ class m200317_041947_create_product_table extends Migration
             'name' => $this->string(100)->notNull(),
             'description' => $this->text(),
             'picture' => $this->text(),
+            'purchase_price' => $this->double(),
             'price_for_order' => $this->double(),
             'price_for_lease' => $this->double(),
             'stock' => $this->integer()->notNull(),

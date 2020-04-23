@@ -19,7 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -28,10 +29,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'id',
             'name',
-            'description:ntext',
+            //'description:ntext',
+            'purchase_price',
             'price_for_order',
             'price_for_lease',
-            //'stock',
+            [
+                'attribute' => 'stock',
+                'value' => function ($data) {
+                    return $data->stock . " " . $data->unit_name;
+                }
+            ],
             //'unit_name',
             //'category_id',
             //'created_by',

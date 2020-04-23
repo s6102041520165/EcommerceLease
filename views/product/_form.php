@@ -22,16 +22,19 @@ use yii\widgets\ActiveForm;
         <div class="col-lg-12">
             <?= $form->field($imageModel, 'imageFiles[]')->fileInput(['multiple' => true]) ?>
         </div>
-        <div class="col-lg-3">
-            <?= $form->field($model, 'price_for_order')->textInput() ?>
+        <div class="col-lg-4">
+            <?= $form->field($model, 'purchase_price')->textInput() ?>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <?= $form->field($model, 'price_for_lease')->textInput() ?>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-4">
+            <?= $form->field($model, 'price_for_lease')->textInput() ?>
+        </div>
+        <div class="col-lg-6">
             <?= $form->field($model, 'stock')->textInput() ?>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-6">
             <?= $form->field($model, 'unit_name')->textInput(['maxlength' => true]) ?>
         </div>
         <?php $categories = ArrayHelper::map(\app\models\Category::find()->all(), 'id', 'name') ?>

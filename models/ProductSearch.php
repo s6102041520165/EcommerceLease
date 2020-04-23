@@ -19,7 +19,7 @@ class ProductSearch extends Product
         return [
             [['id', 'stock', 'category_id', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['name', 'description', 'unit_name'], 'safe'],
-            [['price_for_order', 'price_for_lease'], 'number'],
+            [['price_for_order', 'price_for_lease','purchase_price'], 'number'],
         ];
     }
 
@@ -60,6 +60,7 @@ class ProductSearch extends Product
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'purchase_price' => $this->purchase_price,
             'price_for_order' => $this->price_for_order,
             'price_for_lease' => $this->price_for_lease,
             'stock' => $this->stock,

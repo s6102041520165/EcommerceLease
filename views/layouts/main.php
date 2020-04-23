@@ -66,7 +66,7 @@ if (!Yii::$app->user->isGuest) {
 
                                     ['label' => 'ผู้ใช้', 'url' => ['/user/index'], 'visible' => Yii::$app->user->can("manageUser")],
 
-                                    ['label' => 'รายงานการสั่งซื้อ', 'url' => ['/orders/picker'], 'visible' => Yii::$app->user->can("manageOrder")],
+                                    ['label' => 'รายงานการสั่งซื้อ', 'url' => ['/orders/picker'], 'visible' => Yii::$app->user->can("viewReport")],
                                 ]
                             ],
                             [

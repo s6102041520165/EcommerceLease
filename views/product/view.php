@@ -51,6 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'description',
+            'purchase_price',
             'price_for_order',
             'price_for_lease',
             'stock',

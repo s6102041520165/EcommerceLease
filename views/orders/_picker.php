@@ -16,15 +16,29 @@ $this->title = 'รายงานยอดขายสินค้า';
 
     <?php $form = ActiveForm::begin(['method' => 'get', 'options' => ['target' => '_blank']]); ?>
 
-    <?= $form->field($model, 'dateInput')->widget(\yii\jui\DatePicker::classname(), [
-        'language' => 'th',
-        'dateFormat' => 'yyyy-MM-dd',
-        'options' => ['class' => 'form-control', 'placeholder' => 'ปี-เดือน-วัน']
-    ]) ?>
+    <div class="row">
+        <div class="col-lg-6">
+            <?= $form->field($model, 'dateStart')->widget(\yii\jui\DatePicker::classname(), [
+                'language' => 'th',
+                'dateFormat' => 'yyyy-MM-dd',
+                'options' => ['class' => 'form-control', 'placeholder' => 'ปี-เดือน-วัน']
+            ]) ?>
+        </div>
+
+        <div class="col-lg-6">
+            <?= $form->field($model, 'dateEnd')->widget(\yii\jui\DatePicker::classname(), [
+                'language' => 'th',
+                'dateFormat' => 'yyyy-MM-dd',
+                'options' => ['class' => 'form-control', 'placeholder' => 'ปี-เดือน-วัน']
+            ]) ?>
+        </div>
 
 
-    <div class="form-group">
-        <?= Html::submitButton(FA::icon('search') . ' ค้นหา', ['class' => 'btn btn-success']) ?>
+        <div class="col-lg-12">
+            <div class="form-group">
+                <?= Html::submitButton(FA::icon('search') . ' ค้นหา', ['class' => 'btn btn-success']) ?>
+            </div>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

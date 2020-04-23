@@ -42,9 +42,9 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'stock', 'unit_name', 'category_id'], 'required'],
-            [['description','picture'], 'string'],
-            [['price_for_order', 'price_for_lease'], 'number'],
+            [['name', 'stock', 'unit_name', 'category_id', 'purchase_price'], 'required'],
+            [['description', 'picture'], 'string'],
+            [['price_for_order', 'price_for_lease', 'purchase_price'], 'number'],
             [['stock', 'category_id', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['name', 'unit_name'], 'string', 'max' => 100],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
@@ -63,6 +63,7 @@ class Product extends \yii\db\ActiveRecord
             'description' => Yii::t('app', 'รายละเอียด'),
             'price_for_order' => Yii::t('app', 'ราคาสำหรับซื้อ'),
             'price_for_lease' => Yii::t('app', 'ราคาสำหรับเช่า'),
+            'purchase_price' => Yii::t('app', 'ราคารับซื้อ'),
             'stock' => Yii::t('app', 'สินค้าคงเหลือ'),
             'unit_name' => Yii::t('app', 'ชื่อหน่วยของสินค้า'),
             'category_id' => Yii::t('app', 'ประเภทสินค้า'),

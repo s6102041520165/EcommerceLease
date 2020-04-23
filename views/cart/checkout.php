@@ -137,6 +137,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($profile, 'address')->textarea() ?>
                 </div>
 
+                <div class="col-lg-12">
+                    <?= $form->field($profile, 'telephone')->textInput(['maxlength' => true]) ?>
+                </div>
+
                 <div class="col-lg-3">
                     <?= $form->field($profile, 'subdistrict')->textInput(['maxlength' => true]) ?>
                 </div>
