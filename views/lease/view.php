@@ -4,9 +4,11 @@ use app\models\Lease;
 use app\models\LeaseDetail;
 use app\models\OrderDetail;
 use rmrevin\yii\fontawesome\FA;
+use yii\bootstrap4\Modal;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -39,8 +41,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php endif; ?>
 
         <?php if ($model->status === 10 && Yii::$app->user->can("manageLease")) : ?>
-            <?php echo Html::a(FA::icon('retweet') . ' คืนแล้ว', ['return', 'id' => $model->id], [
-                'class' => 'btn btn-success',
+            <?php echo Html::button(FA::icon('retweet') . ' คืนแล้ว', [
+                'class' => 'btn btn-success open-detail',
+                'data-uri' => \yii\helpers\Url::toRoute(['check-return', 'id' => $model->id]),
             ]) ?>
         <?php endif; ?>
 
@@ -76,13 +79,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'updated_at:relativeTime',
             [
                 'attribute' => 'status',
-                'value' => function($data){
+                'value' => function ($data) {
                     $status = '';
-                    if($data->status === 8) {
+                    if ($data->status === 8) {
                         $status = 'รอดำเนินการ';
-                    } else if($data->status === 10){
+                    } else if ($data->status === 10) {
                         $status = 'ยืนยันแล้ว';
-                    }else if($data->status === 11){
+                    } else if ($data->status === 11) {
                         $status = 'คืนแล้ว';
                     }
                     return $status;
@@ -133,6 +136,33 @@ $this->params['breadcrumbs'][] = $this->title;
         /**/
 
     ]);
+
+    ?>
+
+    <?php
+
+    Modal::begin([
+        'title' => '<h2>สถานะอุปกรณ์</h2>',
+        //'toggleButton' => ['label' => 'click me'],
+        'size' => 'modal-lg',
+    ]);
+
+    echo "<div id='modelContent'></div>";
+
+    Modal::end();
+
+    ?>
+    <?php
+
+    $this->registerJs("
+$(function(){
+    $('.open-detail').click(function(){
+        $('.modal').modal('show')
+            .find('#modelContent')
+            .load($(this).attr('data-uri'));
+    });
+});
+", View::POS_READY, 'updated-status');
 
     ?>
 

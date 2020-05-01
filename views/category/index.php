@@ -1,7 +1,11 @@
 <?php
 
+use app\models\Category;
+use yii\bootstrap4\Modal;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
+use yii\web\View;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CategorySearch */
@@ -19,20 +23,25 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            [
+                'class' => 'yii\grid\SerialColumn',
+                'header' => 'ค้นหา',
+            ],
 
             'name',
             [
                 'attribute' => 'sub_category',
+                'filter' => ArrayHelper::map(Category::find()->all(), 'id', 'name'),
                 'value' => function ($data) {
                     return ($data->sub_category) ? $data->subCategory['name'] : "";
-                }
+                },
             ],
 
             ['class' => 'app\components\grid\ActionColumn'],
@@ -40,5 +49,6 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
     <?php Pjax::end(); ?>
+    
 
 </div>

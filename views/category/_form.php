@@ -20,7 +20,9 @@ $dataId = (isset($id)) ? $id : "";
         ->all(), 'id', 'name') ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
+    <span class="text-danger">
+        หากไม่เลือก หมายถึงให้ประเภทสินค้าเป็นเมนูหลัก
+    </span>
     <?= $form->field($model, 'sub_category')->dropDownList($categories, ['prompt' => '=====ประเภทสินค้าหลัก=====']) ?>
 
     <div class="form-group">

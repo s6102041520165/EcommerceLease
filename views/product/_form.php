@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'purchase_price')->textInput() ?>
         </div>
         <div class="col-lg-4">
-            <?= $form->field($model, 'price_for_lease')->textInput() ?>
+            <?= $form->field($model, 'price_for_order')->textInput() ?>
         </div>
         <div class="col-lg-4">
             <?= $form->field($model, 'price_for_lease')->textInput() ?>

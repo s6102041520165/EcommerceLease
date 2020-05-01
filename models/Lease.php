@@ -23,9 +23,11 @@ use yii\behaviors\TimestampBehavior;
  */
 class Lease extends \yii\db\ActiveRecord
 {
+    public $product_status;
     /**
      * {@inheritdoc}
      */
+
     public static function tableName()
     {
         return 'lease';
@@ -41,7 +43,7 @@ class Lease extends \yii\db\ActiveRecord
             [['lease_date', 'due_date', 'lease_time', 'due_time'], 'safe'],
             [['description'], 'string'],
             [['grand_total'], 'number'],
-            [['status'], 'integer'],
+            [['status','product_status'], 'integer'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
         ];
     }
@@ -52,18 +54,19 @@ class Lease extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'รหัสการเช่า'),
-            'lease_date' => Yii::t('app', 'วันที่รับสินค้า'),
-            'lease_time' => Yii::t('app', 'เวลาที่รับสินค้า'),
-            'due_date' => Yii::t('app', 'วันที่คืนสินค้า'),
-            'due_time' => Yii::t('app', 'เวลาที่คืนสินค้า'),
+            'id' => Yii::t('app', 'รหัส�?ารเ�?�?า'),
+            'lease_date' => Yii::t('app', 'วั�?ที�?รั�?สิ�?�?�?า'),
+            'lease_time' => Yii::t('app', 'เวลาที�?รั�?สิ�?�?�?า'),
+            'due_date' => Yii::t('app', 'วั�?ที�?�?ื�?สิ�?�?�?า'),
+            'due_time' => Yii::t('app', 'เวลาที�?�?ื�?สิ�?�?�?า'),
             'description' => Yii::t('app', 'รายละเอียด'),
-            'grand_total' => Yii::t('app', 'ราคารวม'),
-            'status' => Yii::t('app','สถานะ'),
-            'created_at' => Yii::t('app', 'เช่าเมื่อ'),
-            'created_by' => Yii::t('app', 'เช่าโดย'),
-            'updated_at' => Yii::t('app', 'แก้ไขเมื่อ'),
-            'updated_by' => Yii::t('app', 'แก้ไขโดย'),
+            'grand_total' => Yii::t('app', 'รา�?ารวม'),
+            'status' => Yii::t('app','สถา�?ะ'),
+            'created_at' => Yii::t('app', 'เ�?�?าเมื�?อ'),
+            'created_by' => Yii::t('app', 'เ�?�?า�?ดย'),
+            'updated_at' => Yii::t('app', '�?�?�?�?�?เมื�?อ'),
+            'updated_by' => Yii::t('app', '�?�?�?�?�?�?ดย'),
+            'product_status' => Yii::t('app', 'สถา�?ะอุ�?�?รณ�?'),
         ];
     }
 

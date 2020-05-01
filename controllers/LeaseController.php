@@ -98,6 +98,30 @@ class LeaseController extends Controller
         ]);
     }
 
+    public function actionCheckReturn($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post())) {
+            //เปลี่ยนสถานะ
+            $model->setAttribute('status', 11);
+            //var_dump($model->product_status);
+            if ($model->save() && $model->product_status == 0) {
+                //ใช้งานได้ให้เพิ่มสต็อก
+                $leaseDetail = LeaseDetail::findAll(['lease_id' => $model->id]);
+                foreach ($leaseDetail as $detail) {
+                    $product = Product::findOne(['id' => $detail->product_id]);
+                    $product->setAttribute('stock', $product->stock + $detail->qty);
+                    $product->save();
+                    //die();
+                }
+            }
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+        return $this->renderPartial('check-return', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
     public function actionActive($id)
     {
         $model = $this->findModel($id);
